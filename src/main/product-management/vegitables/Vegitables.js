@@ -6,7 +6,7 @@ import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
 import AddVegitables from "../vegitables/AddVegitables";
 import ViewAndEditVegitables from "./ViewAndEditVegitables";
 
-export default function Vegitables() {
+function Vegitables() {
   const [currentRadioOption, setCurrentRadioOption] = useState("Add");
 
   return (
@@ -25,3 +25,5 @@ export default function Vegitables() {
     </Grid>
   );
 }
+
+export default Vegitables;
