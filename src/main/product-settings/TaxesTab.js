@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   Button,
+  FormHelperText,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
   helpText: {
     margin: theme.spacing(3),
   },
+  cautionText: {
+    color: "#0000FF",
+  },
+  createButton: {
+    marginBottom: theme.spacing(10),
+  },
 }));
 
 export default function TaxesTab() {
@@ -30,32 +37,40 @@ export default function TaxesTab() {
         Taxes created here can be applied to any product category
       </Typography>
       <Grid container direction="row" justify="center" alignItems="center">
-        <TextField
-          className={classes.formComponent}
-          label="Tax name"
-          helperText="This information will be visible to the customer"
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          className={classes.formComponent}
-          label="Tax percentaged"
-          helperText="This information will be visible to the customer"
-          variant="outlined"
-          InputProps={{
-            endAdornment: <InputAdornment position="start">%</InputAdornment>,
-          }}
-          size="small"
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          className={classes.descField}
-          label="Tax description"
-          helperText="This information is not visible to the customer"
-          variant="outlined"
-          size="small"
-        />
+        <Grid item className={classes.formComponent}>
+          <TextField
+            label="Tax name"
+            fullWidth
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText className={classes.cautionText}>
+            This information is displayed on the app
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.formComponent}>
+          <TextField
+            fullWidth
+            label="Tax percentaged"
+            variant="outlined"
+            InputProps={{
+              endAdornment: <InputAdornment position="start">%</InputAdornment>,
+            }}
+            size="small"
+          />
+          <FormHelperText className={classes.cautionText}>
+            This information is displayed on the app
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.descField}>
+          <TextField
+            fullWidth
+            label="Tax description"
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText>For internal reference only</FormHelperText>
+        </Grid>
       </Grid>
       <Grid item>
         <Button variant="outlined">Create tax</Button>

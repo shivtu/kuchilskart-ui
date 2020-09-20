@@ -23,7 +23,6 @@ import PermDataSettingOutlinedIcon from "@material-ui/icons/PermDataSettingOutli
 import CustomerOrders from "../customer-orders/CustomerOrders";
 import ProductManagement from "../product-management/ProductManagement";
 import ProductSettings from "../product-settings/ProductSettings";
-import InventoryManagement from "../inventory-management/InventoryManagement";
 import Customers from "../customers/Customers";
 import Accounts from "../accounts/Accounts";
 import Reports from "../reports/Reports";
@@ -71,8 +70,6 @@ export default function NavigationMenu() {
         return <ProductManagement />;
       case CONSTANTS.NAVIGATION.PRODUCTSETTINGS.ID:
         return <ProductSettings />;
-      case CONSTANTS.NAVIGATION.INVENTORYMANAGEMENT.ID:
-        return <InventoryManagement />;
       case CONSTANTS.NAVIGATION.CUSTOMERS.ID:
         return <Customers />;
       case CONSTANTS.NAVIGATION.ACCOUNTS.ID:
@@ -101,11 +98,6 @@ export default function NavigationMenu() {
       id: CONSTANTS.NAVIGATION.PRODUCTSETTINGS.ID,
       name: CONSTANTS.NAVIGATION.PRODUCTSETTINGS.NAME,
       icon: <PermDataSettingOutlinedIcon />,
-    },
-    {
-      id: CONSTANTS.NAVIGATION.INVENTORYMANAGEMENT.ID,
-      name: CONSTANTS.NAVIGATION.INVENTORYMANAGEMENT.NAME,
-      icon: <EditOutlinedIcon />,
     },
     {
       id: CONSTANTS.NAVIGATION.CUSTOMERS.ID,

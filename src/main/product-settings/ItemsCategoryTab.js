@@ -1,6 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, TextField, Button } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  FormHelperText,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formComponent: {
@@ -14,39 +20,60 @@ const useStyles = makeStyles((theme) => ({
   helpText: {
     margin: theme.spacing(3),
   },
+  cautionText: {
+    color: "#0000FF",
+  },
+  createButton: {
+    marginBottom: theme.spacing(10),
+  },
 }));
 
 export default function ItemsCategoryTab() {
   const classes = useStyles();
+
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Typography className={classes.helpText} variant="body1" gutterBottom>
-        Item category is a mandatory field while creating a product. The item
-        category created here will be associated with the new products you
-        create for the inventory
+        Item categories created here can be applied to any product
       </Typography>
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item>
+        <Grid item className={classes.formComponent}>
           <TextField
-            className={classes.formComponent}
-            label="Item classification"
-            helperText="This is for admin use only. Customer never sees this information"
+            fullWidth
+            label="item classification code"
             variant="outlined"
             size="small"
           />
+          <FormHelperText>
+            This is for admin use only. Customer never sees this information
+          </FormHelperText>
         </Grid>
-        <Grid item>
+        <Grid item className={classes.formComponent}>
           <TextField
-            className={classes.formComponent}
-            label="Item classification information"
-            helperText="This is for admin use only. Customer never sees this information"
+            fullWidth
+            label="Item classification name"
             variant="outlined"
             size="small"
           />
+          <FormHelperText className={classes.cautionText}>
+            This information is visible to customer on the mobile app
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.formComponent}>
+          <TextField
+            fullWidth
+            label="Item classification information"
+            helperText=""
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText>
+            This is for admin use only. Customer never sees this information
+          </FormHelperText>
         </Grid>
       </Grid>
-      <Grid item>
-        <Button variant="outlined">Create Category</Button>
+      <Grid item className={classes.createButton}>
+        <Button variant="outlined">Create category</Button>
       </Grid>
     </Grid>
   );

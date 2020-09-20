@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Switch,
   Button,
+  FormHelperText,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
   helpText: {
     margin: theme.spacing(3),
+  },
+  cautionText: {
+    color: "#0000FF",
   },
 }));
 
@@ -36,26 +40,30 @@ export default function DiscountsTab({
         Discounts created here can be applied to any product category
       </Typography>
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item>
+        <Grid item className={classes.formComponent}>
           <TextField
-            className={classes.formComponent}
+            fullWidth
             label="Discount name"
-            helperText="This information will be visible to the customer"
             variant="outlined"
             size="small"
           />
+          <FormHelperText className={classes.cautionText}>
+            This information will be visible to the customer
+          </FormHelperText>
         </Grid>
-        <Grid item>
+        <Grid item className={classes.formComponent}>
           <TextField
-            className={classes.formComponent}
+            fullWidth
             label="Discount percentaged"
-            helperText="This information will be visible to the customer"
             variant="outlined"
             InputProps={{
               endAdornment: <InputAdornment position="start">%</InputAdornment>,
             }}
             size="small"
           />
+          <FormHelperText className={classes.cautionText}>
+            This information will be visible to the customer
+          </FormHelperText>
         </Grid>
       </Grid>
 

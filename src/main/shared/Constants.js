@@ -12,10 +12,6 @@ const CONSTANTS = {
       ID: "productSettings",
       NAME: "Product settings",
     },
-    INVENTORYMANAGEMENT: {
-      ID: "inventoryManagement",
-      NAME: "Inventory management",
-    },
     CUSTOMERS: {
       ID: "customers",
       NAME: "Customers",
@@ -35,9 +31,9 @@ const CONSTANTS = {
   },
   PRODUCTMANAGEMENT: {
     VEGITABLES: {
-      TABNAME: "Vagitables",
-      ADDTITLE: "Add new vegitable",
-      VIEWANDEDITTILE: "View or edit vegitable",
+      TABNAME: "Fruits & Vagitables",
+      ADDTITLE: "Add new Fruit/vegitable",
+      VIEWANDEDITTILE: "View or edit",
     },
     EDIBLEPRODUCTS: {
       TABNAME: "Edible products",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
   Grid,
   TextField,
@@ -13,6 +13,12 @@ import {
   Select,
   FormHelperText,
 } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import { Autocomplete } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,9 +36,25 @@ const useStyles = makeStyles((theme) => ({
   },
   threeInARow: {
     margin: theme.spacing(2),
-    width: theme.spacing(50),
+    width: theme.spacing(39),
+  },
+  cautionText: {
+    color: "#0000FF",
+  },
+  createButton: {
+    marginBottom: theme.spacing(10),
   },
 }));
+
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    "&$checked": {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 function AddVegitables() {
   const itemCategories = [
@@ -56,13 +78,13 @@ function AddVegitables() {
   const [measurementUnit, setMeasurementUnit] = useState("");
 
   function handleMeasurementUnitSelect(event) {
-    console.log(">>>>>>>>", event.target.value);
     setMeasurementUnit(event.target.value);
   }
 
   function handleisExistingDiscountApplied() {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
   }
+
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid
@@ -79,23 +101,59 @@ function AddVegitables() {
           alignItems="center"
           className={classes.root}
         >
-          <Grid item>
+          <Grid item className={classes.threeInARow}>
             <TextField
-              className={classes.formComponent}
-              label="Product name"
-              helperText="Product name will display as it is on mobile app"
+              label="Vegitable/Fruit name"
               variant="outlined"
               size="small"
+              fullWidth
             />
+            <FormHelperText className={classes.cautionText}>
+              !Name will display as it is on mobile app
+            </FormHelperText>
           </Grid>
-          <Grid item>
+          <Grid item className={classes.threeInARow}>
             <TextField
-              className={classes.formComponent}
-              label="Product variant"
-              helperText="Product variant will display as it is on mobile app"
+              label="Vegitable/Fruit variant"
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
+            <FormHelperText className={classes.cautionText}>
+              !Variant will display as it is on mobile app
+            </FormHelperText>
+          </Grid>
+          <Grid item className={classes.threeInARow}>
+            <TextField
+              label="Expiry date"
+              type="date"
+              defaultValue="2017-05-24"
+              className={classes.textField}
+              fullWidth
               variant="outlined"
               size="small"
             />
+            <FormHelperText>
+              Expiry date must always be a future date
+            </FormHelperText>
+          </Grid>
+          <Grid item className={classes.formComponent}>
+            <TextField
+              fullWidth
+              label="Description of the Fruit/Vegitable"
+              variant="outlined"
+              size="small"
+            />
+            <FormHelperText className={classes.cautionText}>
+              !Description will display as it is on mobile app
+            </FormHelperText>
+          </Grid>
+          <Grid item className={classes.formComponent}>
+            <TextField fullWidth variant="outlined" size="small" type="file" />
+            <FormHelperText className={classes.cautionText}>
+              !Image will display as it is on mobile app (Maximum size allowed
+              30 KB)
+            </FormHelperText>
           </Grid>
         </Grid>
         <Grid
@@ -105,39 +163,42 @@ function AddVegitables() {
           alignItems="center"
           className={classes.root}
         >
-          <Grid item>
+          <Grid item className={classes.formComponent}>
             <Autocomplete
-              className={classes.formComponent}
+              value={itemCategorySelected}
+              fullWidth
               size="small"
               options={itemCategories}
-              getOptionLabel={(option) => option.id}
-              getOptionSelected={(option) =>
-                itemCategories.filter(
-                  (itemCategory) => itemCategory.id === option.id
-                )
-              }
+              getOptionLabel={(option) => option.name || ""}
+              getOptionSelected={(option) => option}
               onChange={(event, newValue) => {
-                setItemCategorySelected(newValue.id);
+                setItemCategorySelected(newValue);
               }}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Product category code"
-                  helperText="This item is used for bulk operations (not visible to the customer)"
+                  label="Product category name"
                   variant="outlined"
                 />
               )}
             />
+            <FormHelperText className={classes.cautionText}>
+              !This item is used for bulk operations (also visible to the
+              customer)
+            </FormHelperText>
           </Grid>
-          <Grid item>
+          <Grid item className={classes.formComponent}>
             <TextField
-              className={classes.formComponent}
-              label="Product Category name"
-              helperText="This value is displayed to the customer"
+              fullWidth
+              label="Product sub category"
+              helperText=""
               variant="outlined"
               size="small"
               disabled
             />
+            <FormHelperText className={classes.cautionText}>
+              This value is displayed to the customer
+            </FormHelperText>
           </Grid>
         </Grid>
 
@@ -234,9 +295,9 @@ function AddVegitables() {
         >
           {isExistingDiscountApplied ? (
             <>
-              <Grid item>
+              <Grid item className={classes.threeInARow}>
                 <Autocomplete
-                  className={classes.formComponent}
+                  fullWidth
                   size="small"
                   options={[]}
                   getOptionLabel={(option) => option.title}
@@ -250,9 +311,9 @@ function AddVegitables() {
                   )}
                 />
               </Grid>
-              <Grid item>
+              <Grid item className={classes.threeInARow}>
                 <TextField
-                  className={classes.formComponent}
+                  fullWidth
                   label="Discount%"
                   helperText="Absolute discount is calculated automatically"
                   variant="outlined"
@@ -260,12 +321,23 @@ function AddVegitables() {
                   disabled
                 />
               </Grid>
+              <Grid item className={classes.threeInARow}>
+                <FormControlLabel
+                  labelPlacement="end"
+                  control={<Checkbox checked color="primary" />}
+                  label="Show this discout to customer"
+                  size="small"
+                />
+                <FormHelperText>
+                  If you uncheck this box, customer will not avail this discount
+                </FormHelperText>
+              </Grid>
             </>
           ) : (
             <>
-              <Grid item>
+              <Grid item className={classes.formComponent}>
                 <TextField
-                  className={classes.formComponent}
+                  fullWidth
                   label="Discount name"
                   helperText="Visible on app (This discount is not saved to the existing list)"
                   variant="outlined"
@@ -284,8 +356,42 @@ function AddVegitables() {
             </>
           )}
         </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          className={classes.root}
+        >
+          <Grid item>
+            <Autocomplete
+              className={classes.formComponent}
+              size="small"
+              options={[]}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Applicable tax"
+                  helperText="This is displayed to the customer"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              className={classes.formComponent}
+              label="Tax%"
+              helperText="Absolute tax is calculated automatically"
+              variant="outlined"
+              size="small"
+              disabled
+            />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item>
+      <Grid item className={classes.createButton}>
         <Button variant="outlined">Create Product</Button>
       </Grid>
     </Grid>
