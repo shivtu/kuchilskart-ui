@@ -5,6 +5,7 @@ import CONSTANTS from "../shared/Constants";
 import Vegitables from "./vegitables/Vegitables";
 import EdibleProducts from "./edible-products/EdibleProducts";
 import FMCGProducts from "./fmcg-products/FMCGProducts";
+import NonVegProducts from "./non-veg-products/NonVegProducts";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,8 +62,9 @@ export default function ProductManagement() {
         />
         <Tab
           label={CONSTANTS.PRODUCTMANAGEMENT.FMCGPRODUCTS.TABNAME}
-          {...a11yProps(1)}
+          {...a11yProps(2)}
         />
+        <Tab label={"Non veg products"} {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <Vegitables />
@@ -72,6 +74,9 @@ export default function ProductManagement() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <FMCGProducts />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <NonVegProducts />
       </TabPanel>
     </div>
   );

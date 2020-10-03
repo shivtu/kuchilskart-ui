@@ -47,6 +47,17 @@ const CONSTANTS = {
       TABLABEL: "View & Edit",
     },
   },
+  LOGIN: {
+    TITLE: "Kuchil's Kart Retailer Login",
+    SPINNER_MESSAGE: "Authenticating...",
+    LOGIN_BTN: "Login",
+  },
+
+  SPINNER: {
+    LARGE: 100,
+    MEDIUM: 70,
+    SMALL: 50,
+  },
 };
 
 export default CONSTANTS;

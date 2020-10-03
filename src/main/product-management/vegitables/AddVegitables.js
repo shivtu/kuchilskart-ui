@@ -13,12 +13,7 @@ import {
   Select,
   FormHelperText,
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { green, blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(125),
   },
   threeInARow: {
-    margin: theme.spacing(2),
-    width: theme.spacing(39),
+    margin: theme.spacing(1),
+    width: "316px",
   },
   cautionText: {
-    color: "#0000FF",
+    color: blue[700],
   },
   createButton: {
     marginBottom: theme.spacing(10),
@@ -58,15 +53,13 @@ const GreenCheckbox = withStyles({
 
 function AddVegitables() {
   const itemCategories = [
-    { name: "edible_products_vegitables", id: "edible_products_vegitables" },
-    { name: "edible_products_fruits", id: "edible_products_fruits" },
-    { name: "edible_products_spices", id: "edible_products_spices" },
-    { name: "edible_products_oil", id: "edible_products_oil" },
-    { name: "edible_products_grains", id: "edible_products_grains" },
-    { name: "edible_products_dal", id: "edible_products_dal" },
-    { name: "fmcg_toiletaries", id: "fmcg_toiletaries" },
-    { name: "fmcg_kitchen_care", id: "fmcg_kitchen_care" },
-    { name: "fmcg_body_care", id: "fmcg_body_care" },
+    { name: "Vegitables", id: "edible_products_vegitables" },
+    { name: "Personal care", id: "edible_products_fruits" },
+    { name: "Dairy products", id: "edible_products_spices" },
+    { name: "Bakery", id: "edible_products_oil" },
+    { name: "Snaks", id: "edible_products_grains" },
+    { name: "Beverages", id: "edible_products_dal" },
+    { name: "Household cleaning", id: "fmcg_toiletaries" },
   ];
 
   const classes = useStyles();
@@ -83,6 +76,10 @@ function AddVegitables() {
 
   function handleisExistingDiscountApplied() {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
+  }
+
+  function handleExpiryDate(event) {
+    console.log("event", Date.now());
   }
 
   return (
@@ -127,11 +124,12 @@ function AddVegitables() {
             <TextField
               label="Expiry date"
               type="date"
-              defaultValue="2017-05-24"
+              defaultValue="2020-05-24"
               className={classes.textField}
               fullWidth
               variant="outlined"
               size="small"
+              onChange={handleExpiryDate}
             />
             <FormHelperText>
               Expiry date must always be a future date
@@ -194,7 +192,6 @@ function AddVegitables() {
               helperText=""
               variant="outlined"
               size="small"
-              disabled
             />
             <FormHelperText className={classes.cautionText}>
               This value is displayed to the customer
