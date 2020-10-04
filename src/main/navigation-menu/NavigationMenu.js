@@ -15,7 +15,6 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
 import AirportShuttleOutlinedIcon from "@material-ui/icons/AirportShuttleOutlined";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import NoteOutlinedIcon from "@material-ui/icons/NoteOutlined";
 import SettingsApplicationsOutlinedIcon from "@material-ui/icons/SettingsApplicationsOutlined";
 import PermDataSettingOutlinedIcon from "@material-ui/icons/PermDataSettingOutlined";
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
 }));
 
@@ -130,7 +129,7 @@ export default function NavigationMenu() {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h5" className={classes.title}>
             Kuchil's Kart
           </Typography>
         </Toolbar>
@@ -143,7 +142,6 @@ export default function NavigationMenu() {
         }}
         anchor="left"
       >
-        Logo placeholder
         <div className={classes.toolbar} />
         <Divider />
         <List>

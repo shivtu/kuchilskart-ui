@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { green, blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
+import { AppContext } from "../../Home";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,7 @@ const GreenCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 function AddVegitables() {
+  const appData = useContext(AppContext);
   const itemCategories = [
     { name: "Vegitables", id: "edible_products_vegitables" },
     { name: "Personal care", id: "edible_products_fruits" },

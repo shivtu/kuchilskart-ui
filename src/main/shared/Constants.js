@@ -47,13 +47,18 @@ const CONSTANTS = {
       TABLABEL: "View & Edit",
     },
   },
-  LOGIN: {
-    TITLE: "Kuchil's Kart Retailer Login",
-    SPINNER_MESSAGE: "Authenticating...",
-    LOGIN_BTN: "Login",
+  BUTTONS: {
+    OK: "Ok",
+    YES: "Yes",
+    NO: "No",
+    CONTINUE: "Continue",
+    SAVE: "Save",
+    DELETE: "Delete",
+    EDIT: "Edit",
+    LOGIN: "Login",
+    SIGN_UP: "Sign up",
   },
-
-  SPINNER: {
+  SPINNER_SIZE: {
     LARGE: 100,
     MEDIUM: 70,
     SMALL: 50,
