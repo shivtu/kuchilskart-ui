@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import CONSTANTS from "../Constants";
 import {
   FormControl,
   RadioGroup,
@@ -14,7 +14,7 @@ function AddEditRadioOption({ setCurrentRadioOption }) {
   function handleAddOption() {
     setAddOption(true);
     setViewAndEditOption(false);
-    setCurrentRadioOption("Add");
+    setCurrentRadioOption(CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD);
   }
 
   function handleViewAnddEditOption() {
@@ -23,21 +23,22 @@ function AddEditRadioOption({ setCurrentRadioOption }) {
     setCurrentRadioOption("ViewAndEdit");
   }
 
+  // TODO: move strings to constants
   return (
     <FormControl component="fieldset">
       <RadioGroup row aria-label="position" name="position" defaultValue="top">
         <FormControlLabel
-          value="Add"
+          value={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD}
           control={<Radio color="primary" checked={addOption} />}
-          label="Add"
-          labelPlacement="top"
+          label={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD}
+          labelPlacement="end"
           onChange={handleAddOption}
         />
         <FormControlLabel
           value="ViewAndEdit"
           control={<Radio color="primary" checked={viewAndEditOption} />}
           label="View and edit"
-          labelPlacement="top"
+          labelPlacement="end"
           onChange={handleViewAnddEditOption}
         />
       </RadioGroup>

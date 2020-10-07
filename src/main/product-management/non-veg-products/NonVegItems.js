@@ -4,17 +4,15 @@ import { Grid, Typography } from "@material-ui/core";
 import CONSTANTS from "../../shared/Constants";
 import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
 
-function NonVegProducts() {
+function NonVegItems() {
   const [currentRadioOption, setCurrentRadioOption] = useState("Add");
   return (
     <Grid container direction="column" justify="center" alignItems="center">
-      <Typography variant="h4" gutterBottom>
-        {currentRadioOption === "Add"
-          ? CONSTANTS.PRODUCTMANAGEMENT.VEGITABLES.ADDTITLE
-          : CONSTANTS.PRODUCTMANAGEMENT.VEGITABLES.VIEWANDEDITTILE}
+      <Typography variant="h6" gutterBottom>
+        {CONSTANTS.PRODUCT_MANAGEMENT.NON_VEGETARIAN_ITEMS.TAB_NAME}
       </Typography>
       <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
-      {currentRadioOption === "Add" ? (
+      {currentRadioOption === CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
         <>add non-veg products</>
       ) : (
         <>view and edit non-veg products</>
@@ -23,4 +21,4 @@ function NonVegProducts() {
   );
 }
 
-export default NonVegProducts;
+export default NonVegItems;

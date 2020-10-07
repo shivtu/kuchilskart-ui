@@ -3,20 +3,21 @@ import { Grid, Typography } from "@material-ui/core";
 
 import CONSTANTS from "../../shared/Constants";
 import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
+import AddEdibleProducts from "./AddEdibleProducts";
 
 function EdibleProducts() {
-  const [currentRadioOption, setCurrentRadioOption] = useState("Add");
+  const [currentRadioOption, setCurrentRadioOption] = useState(
+    CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD
+  );
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
-      <Typography variant="h4" gutterBottom>
-        {currentRadioOption === "Add"
-          ? CONSTANTS.PRODUCTMANAGEMENT.VEGITABLES.ADDTITLE
-          : CONSTANTS.PRODUCTMANAGEMENT.VEGITABLES.VIEWANDEDITTILE}
+      <Typography variant="h6" gutterBottom>
+        {CONSTANTS.PRODUCT_MANAGEMENT.EDIBLE_PRODUCTS.TAB_NAME}
       </Typography>
       <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
-      {currentRadioOption === "Add" ? (
-        <>add edible products</>
+      {currentRadioOption === CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
+        <AddEdibleProducts />
       ) : (
         <>view and edit edible products</>
       )}

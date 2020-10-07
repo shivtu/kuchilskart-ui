@@ -29,23 +29,25 @@ const CONSTANTS = {
       NAME: "Settings",
     },
   },
-  PRODUCTMANAGEMENT: {
+  PRODUCT_MANAGEMENT: {
     VEGITABLES: {
-      TABNAME: "Fruits & Vagitables",
-      ADDTITLE: "Add new Fruit/vegitable",
-      VIEWANDEDITTILE: "View or edit",
+      TAB_NAME: "Fruits & Vagitables",
     },
-    EDIBLEPRODUCTS: {
-      TABNAME: "Edible products",
-      PAGETITLE: "Add new edible product",
+    EDIBLE_PRODUCTS: {
+      TAB_NAME: "Edible products",
     },
-    FMCGPRODUCTS: {
-      TABNAME: "FMCG products",
-      PAGETITLE: "Add new FMCG product",
+    FMCG_PRODUCTS: {
+      TAB_NAME: "FMCG products",
     },
-    VIEWEDITTAB: {
-      TABLABEL: "View & Edit",
+    NON_VEGETARIAN_ITEMS: {
+      TAB_NAME: "Non vegitarian items",
     },
+    RADIO_OPTIONS: {
+      ADD: "Add",
+    },
+  },
+  HELPER_TEXT: {
+    VISIBLE_ON_APP: "This is visible to customer on mobile app!",
   },
   BUTTONS: {
     OK: "Ok",

@@ -13,6 +13,7 @@ import {
   Select,
   FormHelperText,
 } from "@material-ui/core";
+import CONSTANTS from "../../shared/Constants";
 import { green, blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
 import { AppContext } from "../../Home";
@@ -84,6 +85,185 @@ function AddVegitables() {
     console.log("event", Date.now());
   }
 
+  function renderFirstRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Vegitable/Fruit name"
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Vegitable/Fruit variant"
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Expiry date"
+            type="date"
+            defaultValue="2020-05-24"
+            className={classes.textField}
+            fullWidth
+            variant="outlined"
+            size="small"
+            onChange={handleExpiryDate}
+          />
+          <FormHelperText>
+            Expiry date must always be a future date
+          </FormHelperText>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  function renderSecondRow() {
+    return (
+      <Grid
+        constainer
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Grid item className={classes.formComponent}>
+          <TextField
+            fullWidth
+            label="Description of the Fruit/Vegitable"
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.formComponent}>
+          <TextField fullWidth variant="outlined" size="small" type="file" />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP} (Maximum size allowed 30 KB)
+          </FormHelperText>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  function renderFourthRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Grid item>
+          <TextField
+            className={classes.formComponent}
+            label="Net Quantity"
+            helperText="This is the total quantity brought to the warehouse"
+            variant="outlined"
+            size="small"
+          />
+        </Grid>
+        <Grid item>
+          <FormControl
+            variant="outlined"
+            className={classes.formComponent}
+            size="small"
+          >
+            <InputLabel id="demo-simple-select-outlined-label">
+              Measurement unit
+            </InputLabel>
+            <Select
+              value={measurementUnit}
+              onChange={handleMeasurementUnitSelect}
+              label="Measurement unit"
+            >
+              <MenuItem value="" disabled>
+                <em>Select</em>
+              </MenuItem>
+              <MenuItem value="GRAMS">Gms</MenuItem>
+              <MenuItem value="KILOGRAMS">Kg</MenuItem>
+              <MenuItem value="TON">Ton</MenuItem>
+              <MenuItem value="DOZEN">Dozen</MenuItem>
+              <MenuItem value="PEICE">Peice</MenuItem>
+            </Select>
+            <FormHelperText>
+              Cost is spread as per measurement unit
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  function renderThirdRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Grid item className={classes.formComponent}>
+          <Autocomplete
+            value={itemCategorySelected}
+            fullWidth
+            size="small"
+            options={itemCategories}
+            getOptionLabel={(option) => option.name || ""}
+            getOptionSelected={(option) => option}
+            onChange={(event, newValue) => {
+              setItemCategorySelected(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Product category name"
+                variant="outlined"
+              />
+            )}
+          />
+          <FormHelperText className={classes.cautionText}>
+            !This item is used for bulk operations (also visible to the
+            customer)
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.formComponent}>
+          <TextField
+            fullWidth
+            label="Product sub category"
+            helperText=""
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+          </FormHelperText>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid
@@ -93,159 +273,11 @@ function AddVegitables() {
         alignItems="center"
         className={classes.root}
       >
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Grid item className={classes.threeInARow}>
-            <TextField
-              label="Vegitable/Fruit name"
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-            <FormHelperText className={classes.cautionText}>
-              !Name will display as it is on mobile app
-            </FormHelperText>
-          </Grid>
-          <Grid item className={classes.threeInARow}>
-            <TextField
-              label="Vegitable/Fruit variant"
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-            <FormHelperText className={classes.cautionText}>
-              !Variant will display as it is on mobile app
-            </FormHelperText>
-          </Grid>
-          <Grid item className={classes.threeInARow}>
-            <TextField
-              label="Expiry date"
-              type="date"
-              defaultValue="2020-05-24"
-              className={classes.textField}
-              fullWidth
-              variant="outlined"
-              size="small"
-              onChange={handleExpiryDate}
-            />
-            <FormHelperText>
-              Expiry date must always be a future date
-            </FormHelperText>
-          </Grid>
-          <Grid item className={classes.formComponent}>
-            <TextField
-              fullWidth
-              label="Description of the Fruit/Vegitable"
-              variant="outlined"
-              size="small"
-            />
-            <FormHelperText className={classes.cautionText}>
-              !Description will display as it is on mobile app
-            </FormHelperText>
-          </Grid>
-          <Grid item className={classes.formComponent}>
-            <TextField fullWidth variant="outlined" size="small" type="file" />
-            <FormHelperText className={classes.cautionText}>
-              !Image will display as it is on mobile app (Maximum size allowed
-              30 KB)
-            </FormHelperText>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Grid item className={classes.formComponent}>
-            <Autocomplete
-              value={itemCategorySelected}
-              fullWidth
-              size="small"
-              options={itemCategories}
-              getOptionLabel={(option) => option.name || ""}
-              getOptionSelected={(option) => option}
-              onChange={(event, newValue) => {
-                setItemCategorySelected(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Product category name"
-                  variant="outlined"
-                />
-              )}
-            />
-            <FormHelperText className={classes.cautionText}>
-              !This item is used for bulk operations (also visible to the
-              customer)
-            </FormHelperText>
-          </Grid>
-          <Grid item className={classes.formComponent}>
-            <TextField
-              fullWidth
-              label="Product sub category"
-              helperText=""
-              variant="outlined"
-              size="small"
-            />
-            <FormHelperText className={classes.cautionText}>
-              This value is displayed to the customer
-            </FormHelperText>
-          </Grid>
-        </Grid>
+        {renderFirstRow()}
+        {renderSecondRow()}
+        {renderThirdRow()}
+        {renderFourthRow()}
 
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Grid item>
-            <TextField
-              className={classes.formComponent}
-              label="Net Quantity"
-              helperText="This is the total quantity brought to the warehouse"
-              variant="outlined"
-              size="small"
-            />
-          </Grid>
-          <Grid item>
-            <FormControl
-              variant="outlined"
-              className={classes.formComponent}
-              size="small"
-            >
-              <InputLabel id="demo-simple-select-outlined-label">
-                Measurement unit
-              </InputLabel>
-              <Select
-                value={measurementUnit}
-                onChange={handleMeasurementUnitSelect}
-                label="Measurement unit"
-              >
-                <MenuItem value="" disabled>
-                  <em>Select</em>
-                </MenuItem>
-                <MenuItem value="GRAMS">Gms</MenuItem>
-                <MenuItem value="KILOGRAMS">Kg</MenuItem>
-                <MenuItem value="TON">Ton</MenuItem>
-                <MenuItem value="DOZEN">Dozen</MenuItem>
-                <MenuItem value="PEICE">Peice</MenuItem>
-              </Select>
-              <FormHelperText>
-                Cost is spread as per measurement unit
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-        </Grid>
         <Grid
           container
           direction="row"
@@ -304,7 +336,7 @@ function AddVegitables() {
                     <TextField
                       {...params}
                       label="Discount name"
-                      helperText="This is displayed to the customer"
+                      helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
                       variant="outlined"
                     />
                   )}
@@ -372,7 +404,7 @@ function AddVegitables() {
                 <TextField
                   {...params}
                   label="Applicable tax"
-                  helperText="This is displayed to the customer"
+                  helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
                   variant="outlined"
                 />
               )}

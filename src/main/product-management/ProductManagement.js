@@ -5,7 +5,7 @@ import CONSTANTS from "../shared/Constants";
 import Vegitables from "./vegitables/Vegitables";
 import EdibleProducts from "./edible-products/EdibleProducts";
 import FMCGProducts from "./fmcg-products/FMCGProducts";
-import NonVegProducts from "./non-veg-products/NonVegProducts";
+import NonVegItems from "./non-veg-products/NonVegItems";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,18 +53,21 @@ export default function ProductManagement() {
         aria-label="product settings tabs"
       >
         <Tab
-          label={CONSTANTS.PRODUCTMANAGEMENT.VEGITABLES.TABNAME}
+          label={CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
           {...a11yProps(0)}
         />
         <Tab
-          label={CONSTANTS.PRODUCTMANAGEMENT.EDIBLEPRODUCTS.TABNAME}
+          label={CONSTANTS.PRODUCT_MANAGEMENT.EDIBLE_PRODUCTS.TAB_NAME}
           {...a11yProps(1)}
         />
         <Tab
-          label={CONSTANTS.PRODUCTMANAGEMENT.FMCGPRODUCTS.TABNAME}
+          label={CONSTANTS.PRODUCT_MANAGEMENT.FMCG_PRODUCTS.TAB_NAME}
           {...a11yProps(2)}
         />
-        <Tab label={"Non veg products"} {...a11yProps(3)} />
+        <Tab
+          label={CONSTANTS.PRODUCT_MANAGEMENT.NON_VEGETARIAN_ITEMS.TAB_NAME}
+          {...a11yProps(3)}
+        />
       </Tabs>
       <TabPanel value={value} index={0}>
         <Vegitables />
@@ -76,7 +79,7 @@ export default function ProductManagement() {
         <FMCGProducts />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <NonVegProducts />
+        <NonVegItems />
       </TabPanel>
     </div>
   );
