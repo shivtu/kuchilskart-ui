@@ -59,6 +59,7 @@ const CONSTANTS = {
     EDIT: "Edit",
     LOGIN: "Login",
     SIGN_UP: "Sign up",
+    RESET: "Reset",
   },
   SPINNER_SIZE: {
     LARGE: 100,

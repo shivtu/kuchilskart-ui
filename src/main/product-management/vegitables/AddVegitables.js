@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
   cautionText: {
     color: blue[700],
   },
-  createButton: {
+  saveAndResetButtons: {
+    marginTop: theme.spacing(10),
     marginBottom: theme.spacing(10),
   },
 }));
@@ -264,6 +265,161 @@ function AddVegitables() {
     );
   }
 
+  function renderFifthRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <TextField
+          className={classes.formComponent}
+          label="Net cost price"
+          helperText="This value is not visible to the user (for internal user only)"
+          variant="outlined"
+          size="small"
+        />
+
+        <TextField
+          className={classes.formComponent}
+          label="Fixed cost"
+          helperText="This value is not visible to the user (for internal user only)"
+          variant="outlined"
+          size="small"
+        />
+      </Grid>
+    );
+  }
+
+  function renderSixthRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        {isExistingDiscountApplied ? (
+          <>
+            <Grid item className={classes.threeInARow}>
+              <Autocomplete
+                fullWidth
+                size="small"
+                options={[]}
+                getOptionLabel={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Discount name"
+                    helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item className={classes.threeInARow}>
+              <TextField
+                fullWidth
+                label="Discount%"
+                helperText="Absolute discount is calculated automatically"
+                variant="outlined"
+                size="small"
+                disabled
+              />
+            </Grid>
+            <Grid item className={classes.threeInARow}>
+              <FormControlLabel
+                labelPlacement="end"
+                control={<Checkbox checked color="primary" />}
+                label="Show this discout to customer"
+                size="small"
+              />
+              <FormHelperText>
+                If you uncheck this box, customer will not avail this discount
+              </FormHelperText>
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Grid item className={classes.formComponent}>
+              <TextField
+                fullWidth
+                label="Discount name"
+                helperText="Visible on app (This discount is not saved to the existing list)"
+                variant="outlined"
+                size="small"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                className={classes.formComponent}
+                label="Discount%"
+                helperText="Absolute discount is calculated automatically"
+                variant="outlined"
+                size="small"
+              />
+            </Grid>
+          </>
+        )}
+      </Grid>
+    );
+  }
+
+  function renderSeventhRow() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Autocomplete
+          className={classes.formComponent}
+          size="small"
+          options={[]}
+          getOptionLabel={(option) => option.title}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Applicable tax"
+              helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+              variant="outlined"
+            />
+          )}
+        />
+
+        <TextField
+          className={classes.formComponent}
+          label="Tax%"
+          helperText="Absolute tax is calculated automatically"
+          variant="outlined"
+          size="small"
+          disabled
+        />
+      </Grid>
+    );
+  }
+
+  function renderSaveButton() {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+        className={classes.saveAndResetButtons}
+      >
+        <Button variant="contained" color="primary" disabled>
+          {CONSTANTS.BUTTONS.SAVE}
+        </Button>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid
@@ -277,154 +433,23 @@ function AddVegitables() {
         {renderSecondRow()}
         {renderThirdRow()}
         {renderFourthRow()}
+        {renderFifthRow()}
 
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Grid item>
-            <TextField
-              className={classes.formComponent}
-              label="Net cost price"
-              helperText="This value is not visible to the user (for internal user only)"
-              variant="outlined"
-              size="small"
+        <FormControlLabel
+          value="top"
+          control={
+            <Checkbox
+              color="primary"
+              checked={isExistingDiscountApplied}
+              onChange={handleisExistingDiscountApplied}
             />
-          </Grid>
-          <Grid item>
-            <TextField
-              className={classes.formComponent}
-              label="Fixed cost"
-              helperText="This value is not visible to the user (for internal user only)"
-              variant="outlined"
-              size="small"
-            />
-          </Grid>
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            value="top"
-            control={
-              <Checkbox
-                color="primary"
-                checked={isExistingDiscountApplied}
-                onChange={handleisExistingDiscountApplied}
-              />
-            }
-            label="Apply existing discount"
-          />
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          {isExistingDiscountApplied ? (
-            <>
-              <Grid item className={classes.threeInARow}>
-                <Autocomplete
-                  fullWidth
-                  size="small"
-                  options={[]}
-                  getOptionLabel={(option) => option.title}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Discount name"
-                      helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
-                      variant="outlined"
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item className={classes.threeInARow}>
-                <TextField
-                  fullWidth
-                  label="Discount%"
-                  helperText="Absolute discount is calculated automatically"
-                  variant="outlined"
-                  size="small"
-                  disabled
-                />
-              </Grid>
-              <Grid item className={classes.threeInARow}>
-                <FormControlLabel
-                  labelPlacement="end"
-                  control={<Checkbox checked color="primary" />}
-                  label="Show this discout to customer"
-                  size="small"
-                />
-                <FormHelperText>
-                  If you uncheck this box, customer will not avail this discount
-                </FormHelperText>
-              </Grid>
-            </>
-          ) : (
-            <>
-              <Grid item className={classes.formComponent}>
-                <TextField
-                  fullWidth
-                  label="Discount name"
-                  helperText="Visible on app (This discount is not saved to the existing list)"
-                  variant="outlined"
-                  size="small"
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  className={classes.formComponent}
-                  label="Discount%"
-                  helperText="Absolute discount is calculated automatically"
-                  variant="outlined"
-                  size="small"
-                />
-              </Grid>
-            </>
-          )}
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.root}
-        >
-          <Grid item>
-            <Autocomplete
-              className={classes.formComponent}
-              size="small"
-              options={[]}
-              getOptionLabel={(option) => option.title}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Applicable tax"
-                  helperText={CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
-                  variant="outlined"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              className={classes.formComponent}
-              label="Tax%"
-              helperText="Absolute tax is calculated automatically"
-              variant="outlined"
-              size="small"
-              disabled
-            />
-          </Grid>
-        </Grid>
+          }
+          label="Apply existing discount"
+        />
+        {renderSixthRow()}
+        {renderSeventhRow()}
       </Grid>
-      <Grid item className={classes.createButton}>
-        <Button variant="outlined">Create Product</Button>
-      </Grid>
+      {renderSaveButton()}
     </Grid>
   );
 }
