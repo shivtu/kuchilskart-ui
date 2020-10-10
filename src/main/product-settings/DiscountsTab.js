@@ -1,4 +1,5 @@
 import React from "react";
+import CONSTANTS from "../shared/Constants";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -35,11 +36,11 @@ export default function DiscountsTab({
 }) {
   const classes = useStyles();
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
+    <Grid container direction="column">
       <Typography className={classes.helpText} variant="body1" gutterBottom>
         Discounts created here can be applied to any product category
       </Typography>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container justify="center">
         <Grid item className={classes.formComponent}>
           <TextField
             fullWidth
@@ -53,7 +54,6 @@ export default function DiscountsTab({
         </Grid>
         <Grid item className={classes.formComponent}>
           <TextField
-            fullWidth
             label="Discount percentaged"
             variant="outlined"
             InputProps={{
@@ -67,33 +67,27 @@ export default function DiscountsTab({
         </Grid>
       </Grid>
 
-      <Grid item>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Grid item>
-            <Typography
-              className={classes.formComponent}
-              variant="body1"
-              // style={{ maxWidth: "300px" }}
-            >
-              When a discount is inactive, even if it is applied to the product,
-              customer won't see the discount and no discounts will be
-              calculated on the selling price.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormControlLabel
-              className={classes.formComponent}
-              value={isDiscountActive}
-              control={<Switch color="primary" />}
-              label={isDiscountActiveLabel}
-              labelPlacement="top"
-              onChange={handleDiscountState}
-            />
-          </Grid>
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Typography className={classes.formComponent} variant="body1">
+            When a discount is inactive, even if it is applied to the product,
+            customer won't see the discount and no discounts will be calculated
+            on the selling price.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <FormControlLabel
+            className={classes.formComponent}
+            value={isDiscountActive}
+            control={<Switch color="primary" />}
+            label={isDiscountActiveLabel}
+            labelPlacement="top"
+            onChange={handleDiscountState}
+          />
         </Grid>
       </Grid>
-      <Grid item>
-        <Button variant="outlined">Create Discount</Button>
+      <Grid container justify="center">
+        <Button variant="outlined">{CONSTANTS.BUTTONS.SAVE}</Button>
       </Grid>
     </Grid>
   );

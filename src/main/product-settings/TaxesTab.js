@@ -1,4 +1,5 @@
 import React from "react";
+import CONSTANTS from "../shared/Constants";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -32,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
 export default function TaxesTab() {
   const classes = useStyles();
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
+    <Grid container direction="column">
       <Typography className={classes.helpText} variant="body1" gutterBottom>
         Taxes created here can be applied to any product category
       </Typography>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container justify="center">
         <Grid item className={classes.formComponent}>
           <TextField
             label="Tax name"
@@ -50,7 +51,6 @@ export default function TaxesTab() {
         </Grid>
         <Grid item className={classes.formComponent}>
           <TextField
-            fullWidth
             label="Tax percentaged"
             variant="outlined"
             InputProps={{
@@ -72,8 +72,8 @@ export default function TaxesTab() {
           <FormHelperText>For internal reference only</FormHelperText>
         </Grid>
       </Grid>
-      <Grid item>
-        <Button variant="outlined">Create tax</Button>
+      <Grid container justify="center">
+        <Button variant="outlined">{CONSTANTS.BUTTONS.SAVE}</Button>
       </Grid>
     </Grid>
   );

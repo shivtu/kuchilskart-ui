@@ -22,10 +22,9 @@ function Vegitables() {
   };
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
+    <Grid container direction="column">
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         style={styles.radioControlSection}

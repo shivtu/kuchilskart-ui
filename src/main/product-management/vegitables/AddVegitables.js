@@ -422,13 +422,7 @@ function AddVegitables() {
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        className={classes.root}
-      >
+      <Grid container direction="column" className={classes.root}>
         {renderFirstRow()}
         {renderSecondRow()}
         {renderThirdRow()}

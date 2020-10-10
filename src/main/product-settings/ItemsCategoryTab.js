@@ -1,4 +1,5 @@
 import React from "react";
+import CONSTANTS from "../shared/Constants";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -32,11 +33,11 @@ export default function ItemsCategoryTab() {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
+    <Grid container direction="column">
       <Typography className={classes.helpText} variant="body1" gutterBottom>
         Item categories created here can be applied to any product
       </Typography>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid container justify="center">
         <Grid item className={classes.formComponent}>
           <TextField
             fullWidth
@@ -72,8 +73,8 @@ export default function ItemsCategoryTab() {
           </FormHelperText>
         </Grid>
       </Grid>
-      <Grid item className={classes.createButton}>
-        <Button variant="outlined">Create category</Button>
+      <Grid container justify="center">
+        <Button variant="outlined">{CONSTANTS.BUTTONS.SAVE}</Button>
       </Grid>
     </Grid>
   );
