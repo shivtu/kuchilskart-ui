@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 
 function AddEditRadioOption({ setCurrentRadioOption }) {
-  const [addOption, setAddOption] = useState(true);
-  const [viewAndEditOption, setViewAndEditOption] = useState(false);
+  const [addOption, setAddOption] = useState(false);
+  const [viewAndEditOption, setViewAndEditOption] = useState(true);
 
   function handleAddOption() {
     setAddOption(true);
@@ -28,18 +28,18 @@ function AddEditRadioOption({ setCurrentRadioOption }) {
     <FormControl component="fieldset">
       <RadioGroup row aria-label="position" name="position" defaultValue="top">
         <FormControlLabel
+          value={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT}
+          control={<Radio color="primary" checked={viewAndEditOption} />}
+          label={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT}
+          labelPlacement="end"
+          onChange={handleViewAnddEditOption}
+        />
+        <FormControlLabel
           value={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD}
           control={<Radio color="primary" checked={addOption} />}
           label={CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD}
           labelPlacement="end"
           onChange={handleAddOption}
-        />
-        <FormControlLabel
-          value="ViewAndEdit"
-          control={<Radio color="primary" checked={viewAndEditOption} />}
-          label="View and edit"
-          labelPlacement="end"
-          onChange={handleViewAnddEditOption}
         />
       </RadioGroup>
     </FormControl>

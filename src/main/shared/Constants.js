@@ -44,6 +44,7 @@ const CONSTANTS = {
     },
     RADIO_OPTIONS: {
       ADD: "Add",
+      VIEW_EDIT: "View and edit",
     },
   },
   HELPER_TEXT: {

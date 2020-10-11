@@ -8,27 +8,18 @@ import ViewAndEditVegitables from "./ViewAndEditVegitables";
 
 function Vegitables() {
   const [currentRadioOption, setCurrentRadioOption] = useState(
-    CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD
+    CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
   );
 
   const styles = {
     pageTitle: {
       marginRight: "20px",
     },
-    radioControlSection: {
-      marginTop: "30px",
-      marginBottom: "30px",
-    },
   };
 
   return (
     <Grid container direction="column">
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        style={styles.radioControlSection}
-      >
+      <Grid container justify="center" alignItems="center">
         <Typography variant="h6" style={styles.pageTitle}>
           {CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
         </Typography>
