@@ -48,8 +48,9 @@ function Login({ setAppData }) {
     }
     setSpinner(true);
     setSpinnerMessage("Authenticating");
-    const token = await authenticateUser();
-    if (!Boolean(token?.jwt)) {
+    const authRes = await authenticateUser(userIdText, userPasswordText);
+    const jwtToken = authRes.jwt;
+    if (!Boolean(jwtToken)) {
       setOkButtonAlert(true);
       setOkButtonAlertTitle("Authentication failed");
       setOkButtonAlertMessage("Username/password mismatch, please try again");
@@ -57,25 +58,17 @@ function Login({ setAppData }) {
       return;
     }
     setSpinnerMessage("Getting app data");
-    const utility = await fetchUtilityData(token);
-    if (utility.error) {
+    const utilityData = await fetchUtilityData(jwtToken);
+    if (utilityData.error) {
       setOkButtonAlert(true);
-      setOkButtonAlertTitle(utility.error);
-      setOkButtonAlertMessage(utility.message);
+      setOkButtonAlertTitle(utilityData.error);
+      setOkButtonAlertMessage(utilityData.message);
       setSpinner(false);
       return;
     }
     // TODO: handle utility api call failure
     setSpinner(false);
-    setAppData({ token, utility });
-  }
-
-  function handleUserId(event) {
-    setUserIdText(event.target.value);
-  }
-
-  function handleUserPasswordText(event) {
-    setUserPasswordText(event.target.value);
+    setAppData({ jwtToken, utilityData });
   }
 
   return (
@@ -100,7 +93,7 @@ function Login({ setAppData }) {
           variant="outlined"
           size="small"
           value={userIdText}
-          onChange={handleUserId}
+          onChange={(_e) => setUserIdText(_e.target.value)}
         />
       </Grid>
       <Grid item className={classes.formComponent}>
@@ -111,7 +104,7 @@ function Login({ setAppData }) {
           size="small"
           type="password"
           value={userPasswordText}
-          onChange={handleUserPasswordText}
+          onChange={(_e) => setUserPasswordText(_e.target.value)}
         />
       </Grid>
       <Grid item className={classes.createButton}>

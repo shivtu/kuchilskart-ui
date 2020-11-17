@@ -1,47 +1,50 @@
-async function authenticateUser() {
-  // TODO: replace auth api call simulation with api call
-  return { jwt: "qwerty" };
+import axios from "axios";
+
+const httpOptions = {
+  host:
+    "http://kucchilskartstaging-env.eba-zr6pprpw.ap-south-1.elasticbeanstalk.com",
+  uri: "/api/v1",
+  role: { retailer: "/retailer", users: "/users" },
+  route: {
+    welcome: "/welcome",
+    findAllUtilties: "/utility/find/allUtilities",
+    authenticate: "/authenticate",
+  },
+};
+
+async function welcomeMsg() {
+  const welcomeMessage = await axios({
+    method: "GET",
+    url:
+      "http://kucchilskartstaging-env.eba-zr6pprpw.ap-south-1.elasticbeanstalk.com/api/v1/users/welcome",
+  });
+  return welcomeMessage.data;
+}
+
+async function authenticateUser(userName, password) {
+  const jwt = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.users}${httpOptions.route.authenticate}`,
+    data: { username: userName, password: password },
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+  return jwt.data;
 }
 
 async function fetchUtilityData(authToken) {
-  // TODO: replace utility fetch api call simulation with api call
-  const validated = {
-    response: {
-      statusCode: 200,
-      statusMessage: "2 utilities found",
-      result: [
-        {
-          deliveryCharges: [],
-          customerOrdersDiscounts: [],
-          taxes: [
-            {
-              taxesTableId: 1,
-              taxName: "cess",
-              taxPercent: 0.3,
-              additionalTaxInfo: "Krishi kalyan cess",
-              shouldTaxApply: true,
-              taxLastUpdatedBy: "batman@gmail.com",
-              taxLastUpdatedOn: "2020-10-03T18:23:08.342097",
-            },
-          ],
-          itemCategories: [
-            {
-              itemCategoryTableId: 1,
-              itemCategory: "Fruits & Vegitables",
-              itemSubCategory: "Vegitables",
-              itemCategorySubId: "fruits & vegitables-vegitables",
-              itemCategoryInfo: "Vegitables only",
-              itemCategoryLastUpdatedBy: "batman@gmail.com",
-              itemCategoryLastUpdatedOn: "2020-10-03T18:21:47.048926",
-            },
-          ],
-        },
-      ],
+  const utilityData = await axios({
+    method: "GET",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllUtilties}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
     },
-  };
-  return validated;
+  });
+  return utilityData.data;
 }
 
 async function fetchAllVegitables() {}
 
-export { authenticateUser, fetchUtilityData, fetchAllVegitables };
+export { authenticateUser, fetchUtilityData, fetchAllVegitables, welcomeMsg };
