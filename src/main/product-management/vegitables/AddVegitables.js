@@ -90,7 +90,6 @@ function AddVegitables() {
     return (
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -140,7 +139,6 @@ function AddVegitables() {
     return (
       <Grid
         constainer
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -166,11 +164,58 @@ function AddVegitables() {
     );
   }
 
+  function renderThirdRow() {
+    return (
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
+        <Grid item className={classes.formComponent}>
+          <Autocomplete
+            value={itemCategorySelected}
+            fullWidth
+            size="small"
+            options={itemCategories}
+            getOptionLabel={(option) => option.name || ""}
+            getOptionSelected={(option) => option}
+            onChange={(event, newValue) => {
+              setItemCategorySelected(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Product category name"
+                variant="outlined"
+              />
+            )}
+          />
+          <FormHelperText className={classes.cautionText}>
+            !This item is used for bulk operations (also visible to the
+            customer)
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.formComponent}>
+          <TextField
+            fullWidth
+            label="Product sub category"
+            helperText=""
+            variant="outlined"
+            size="small"
+          />
+          <FormHelperText className={classes.cautionText}>
+            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+          </FormHelperText>
+        </Grid>
+      </Grid>
+    );
+  }
+
   function renderFourthRow() {
     return (
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -216,60 +261,10 @@ function AddVegitables() {
     );
   }
 
-  function renderThirdRow() {
-    return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classes.root}
-      >
-        <Grid item className={classes.formComponent}>
-          <Autocomplete
-            value={itemCategorySelected}
-            fullWidth
-            size="small"
-            options={itemCategories}
-            getOptionLabel={(option) => option.name || ""}
-            getOptionSelected={(option) => option}
-            onChange={(event, newValue) => {
-              setItemCategorySelected(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Product category name"
-                variant="outlined"
-              />
-            )}
-          />
-          <FormHelperText className={classes.cautionText}>
-            !This item is used for bulk operations (also visible to the
-            customer)
-          </FormHelperText>
-        </Grid>
-        <Grid item className={classes.formComponent}>
-          <TextField
-            fullWidth
-            label="Product sub category"
-            helperText=""
-            variant="outlined"
-            size="small"
-          />
-          <FormHelperText className={classes.cautionText}>
-            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
-          </FormHelperText>
-        </Grid>
-      </Grid>
-    );
-  }
-
   function renderFifthRow() {
     return (
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -297,7 +292,6 @@ function AddVegitables() {
     return (
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -372,7 +366,6 @@ function AddVegitables() {
     return (
       <Grid
         container
-        direction="row"
         justify="center"
         alignItems="center"
         className={classes.root}
@@ -408,7 +401,6 @@ function AddVegitables() {
     return (
       <Grid
         container
-        direction="row"
         justify="space-around"
         alignItems="center"
         className={classes.saveAndResetButtons}
@@ -421,14 +413,19 @@ function AddVegitables() {
   }
 
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <Grid container direction="column" className={classes.root}>
-        {renderFirstRow()}
-        {renderSecondRow()}
-        {renderThirdRow()}
-        {renderFourthRow()}
-        {renderFifthRow()}
+    <Grid container direction="column" className={classes.root}>
+      {renderFirstRow()}
+      {renderSecondRow()}
+      {renderThirdRow()}
+      {renderFourthRow()}
+      {renderFifthRow()}
 
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+      >
         <FormControlLabel
           value="top"
           control={
@@ -440,9 +437,9 @@ function AddVegitables() {
           }
           label="Apply existing discount"
         />
-        {renderSixthRow()}
-        {renderSeventhRow()}
       </Grid>
+      {renderSixthRow()}
+      {renderSeventhRow()}
       {renderSaveButton()}
     </Grid>
   );

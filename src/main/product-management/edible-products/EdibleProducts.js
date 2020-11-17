@@ -7,7 +7,7 @@ import AddEdibleProducts from "./AddEdibleProducts";
 
 function EdibleProducts() {
   const [currentRadioOption, setCurrentRadioOption] = useState(
-    CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD
+    CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
   );
 
   return (

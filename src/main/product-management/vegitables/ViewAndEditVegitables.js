@@ -6,8 +6,10 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Slide,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import UnknownError from "../../shared/common/errors/UnknownError";
 
 function ViewAndEditVegitables() {
   const tableHeader = [
@@ -436,14 +438,19 @@ function ViewAndEditVegitables() {
   const [vegitables, setVegitables] = useState(
     result[0].allProducts[0].vegitablesList
   );
+  const [unknownError, setUnknownError] = useState(false);
 
   function openEditMenu(subId) {
-    alert("........", subId.f.f.f);
+    try {
+      alert("........", subId.f.f.f);
+    } catch {
+      setUnknownError(!unknownError);
+    }
   }
 
   return (
     <>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             {tableHeader.map((head, i) => (
@@ -476,6 +483,7 @@ function ViewAndEditVegitables() {
           ))}
         </TableBody>
       </Table>
+      {UnknownError && <UnknownError />}
     </>
   );
 }
