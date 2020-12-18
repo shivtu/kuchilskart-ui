@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import {
   Button,
   Table,
@@ -6,12 +8,22 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Slide,
+  Grid,
+  TextField,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import UnknownError from "../../shared/common/errors/UnknownError";
+import EditVegitable from "./EditVegitable";
+
+const useStyles = makeStyles((theme) => ({
+  searchInput: {
+    width: 300,
+  },
+}));
 
 function ViewAndEditVegitables() {
+  const classes = useStyles();
+
   const tableHeader = [
     "#",
     "Vegitable/Fruit name",
@@ -439,18 +451,46 @@ function ViewAndEditVegitables() {
     result[0].allProducts[0].vegitablesList
   );
   const [unknownError, setUnknownError] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [vegitableToEdit, setVegitableToEdit] = useState("");
 
   function openEditMenu(subId) {
     try {
-      alert("........", subId.f.f.f);
+      const rowToEdit = vegitables.find(
+        (vegitable) => vegitable.vegitableSubId === subId
+      );
+      setVegitableToEdit(rowToEdit);
+      setOpen(true);
     } catch {
       setUnknownError(!unknownError);
     }
   }
 
+  function handleTableSearch(_e) {
+    // handle table search
+  }
+
   return (
     <>
-      <Table size="small">
+      {open && (
+        <EditVegitable setOpen={setOpen} vegitableToEdit={vegitableToEdit} />
+      )}
+      {
+        <Grid container spacing={1} alignItems="flex-end">
+          <Grid item>
+            <SearchOutlinedIcon />
+          </Grid>
+          <Grid item>
+            <TextField
+              className={classes.searchInput}
+              id="input-with-icon-grid"
+              label="Search by vegitable/fruit name"
+              onChange={handleTableSearch}
+            />
+          </Grid>
+        </Grid>
+      }
+      <Table size="small" stickyHeader>
         <TableHead>
           <TableRow>
             {tableHeader.map((head, i) => (
@@ -483,7 +523,7 @@ function ViewAndEditVegitables() {
           ))}
         </TableBody>
       </Table>
-      {UnknownError && <UnknownError />}
+      {unknownError && <UnknownError />}
     </>
   );
 }

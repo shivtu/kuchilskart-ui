@@ -9,7 +9,7 @@ export const Home = () => {
   const [isAppDataReady, setIsAppDataReady] = useState(false);
 
   useEffect(() => {
-    setIsAppDataReady(Boolean(appData.token?.jwt && appData.utility?.response));
+    setIsAppDataReady(Boolean(appData.jwtToken && appData.utilityData));
   }, [appData]);
 
   return (

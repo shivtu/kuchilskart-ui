@@ -11,10 +11,10 @@ function OkButtonDialog({ setOkButtonAlert, title, message }) {
   return (
     <div>
       <Dialog fullWidth open onClose={() => setOkButtonAlert(false)}>
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{title || ""}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {message}
+            {message || ""}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

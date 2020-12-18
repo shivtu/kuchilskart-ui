@@ -1,21 +1,17 @@
-import React, { useState, useContext } from "react";
-
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
 import {
+  Dialog,
   Grid,
   TextField,
   FormControlLabel,
   Checkbox,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   FormHelperText,
+  Typography,
 } from "@material-ui/core";
-import { green, blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
-import { AppContext } from "../../Home";
+import { makeStyles } from "@material-ui/core/styles";
+import { blue } from "@material-ui/core/colors";
 import CONSTANTS from "../../shared/Constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,18 +40,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    "&$checked": {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+function EditVegitable({ setOpen, vegitableToEdit }) {
+  const classes = useStyles();
 
-function AddVegitables() {
-  const appData = useContext(AppContext);
+  const [itemCategorySelected, setItemCategorySelected] = useState("");
+  const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
+    true
+  );
+  const [measurementUnit, setMeasurementUnit] = useState("");
+
   const itemCategories = [
     { name: "Vegitables", id: "edible_products_vegitables" },
     { name: "Personal care", id: "edible_products_fruits" },
@@ -65,14 +58,6 @@ function AddVegitables() {
     { name: "Beverages", id: "edible_products_dal" },
     { name: "Household cleaning", id: "fmcg_toiletaries" },
   ];
-
-  const classes = useStyles();
-
-  const [itemCategorySelected, setItemCategorySelected] = useState("");
-  const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
-    true
-  );
-  const [measurementUnit, setMeasurementUnit] = useState("");
 
   function handleMeasurementUnitSelect(event) {
     setMeasurementUnit(event.target.value);
@@ -100,6 +85,8 @@ function AddVegitables() {
             variant="outlined"
             size="small"
             fullWidth
+            value={vegitableToEdit.vegitableName}
+            disabled
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -111,6 +98,8 @@ function AddVegitables() {
             variant="outlined"
             size="small"
             fullWidth
+            value={vegitableToEdit.vegitableVariant}
+            disabled
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -149,6 +138,7 @@ function AddVegitables() {
             label="Description of the Fruit/Vegitable"
             variant="outlined"
             size="small"
+            value={vegitableToEdit.vegitableDescp}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -173,23 +163,13 @@ function AddVegitables() {
         className={classes.root}
       >
         <Grid item className={classes.formComponent}>
-          <Autocomplete
-            value={itemCategorySelected}
+          <TextField
             fullWidth
             size="small"
-            options={itemCategories}
-            getOptionLabel={(option) => option.name || ""}
-            getOptionSelected={(option) => option}
-            onChange={(event, newValue) => {
-              setItemCategorySelected(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Product category name"
-                variant="outlined"
-              />
-            )}
+            label="Product category name"
+            variant="outlined"
+            value={vegitableToEdit.itemCategory}
+            disabled
           />
           <FormHelperText className={classes.cautionText}>
             !This item is used for bulk operations (also visible to the
@@ -200,9 +180,10 @@ function AddVegitables() {
           <TextField
             fullWidth
             label="Product sub category"
-            helperText=""
             variant="outlined"
             size="small"
+            value={vegitableToEdit.itemSubCategory}
+            disabled
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -220,42 +201,30 @@ function AddVegitables() {
         alignItems="center"
         className={classes.root}
       >
-        <Grid item>
+        <Grid item className={classes.formComponent}>
           <TextField
-            className={classes.formComponent}
-            label="Net Quantity"
-            helperText="This is the total quantity brought to the warehouse"
+            fullWidth
+            label="Measurement unit"
             variant="outlined"
             size="small"
+            value={vegitableToEdit.vegitableMeasureMentUnit}
+            disabled
           />
+          <FormHelperText className={classes.cautionText}>
+            Cost is spread as per measurement unit
+          </FormHelperText>
         </Grid>
-        <Grid item>
-          <FormControl
+        <Grid item className={classes.formComponent}>
+          <TextField
+            label="Net Quantity"
             variant="outlined"
-            className={classes.formComponent}
             size="small"
-          >
-            <InputLabel id="demo-simple-select-outlined-label">
-              Measurement unit
-            </InputLabel>
-            <Select
-              value={measurementUnit}
-              onChange={handleMeasurementUnitSelect}
-              label="Measurement unit"
-            >
-              <MenuItem value="" disabled>
-                <em>Select</em>
-              </MenuItem>
-              <MenuItem value="GRAMS">Gms</MenuItem>
-              <MenuItem value="KILOGRAMS">Kg</MenuItem>
-              <MenuItem value="TON">Ton</MenuItem>
-              <MenuItem value="DOZEN">Dozen</MenuItem>
-              <MenuItem value="PEICE">Peice</MenuItem>
-            </Select>
-            <FormHelperText>
-              Cost is spread as per measurement unit
-            </FormHelperText>
-          </FormControl>
+            type="number"
+            fullWidth
+          />
+          <FormHelperText>
+            Cost is spread as per measurement unit
+          </FormHelperText>
         </Grid>
       </Grid>
     );
@@ -405,44 +374,60 @@ function AddVegitables() {
         alignItems="center"
         className={classes.saveAndResetButtons}
       >
-        <Button variant="contained" color="primary" disabled>
+        <Button variant="contained" color="primary" onClick={closeModal}>
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={closeModal}>
           {CONSTANTS.BUTTONS.SAVE}
         </Button>
       </Grid>
     );
   }
 
-  return (
-    <Grid container direction="column" className={classes.root}>
-      {renderFirstRow()}
-      {renderSecondRow()}
-      {renderThirdRow()}
-      {renderFourthRow()}
-      {renderFifthRow()}
+  function closeModal() {
+    setOpen(false);
+  }
 
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        className={classes.root}
-      >
-        <FormControlLabel
-          value="top"
-          control={
-            <Checkbox
-              color="primary"
-              checked={isExistingDiscountApplied}
-              onChange={handleisExistingDiscountApplied}
-            />
-          }
-          label="Apply existing discount"
-        />
+  return (
+    <Dialog fullScreen open>
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Typography className={classes.formComponent} variant="body1">
+            Some of the fields that are disabled cannot be edited, if you need
+            new values for those fields create a new vegitable/fruit
+          </Typography>
+        </Grid>
       </Grid>
-      {renderSixthRow()}
-      {renderSeventhRow()}
-      {renderSaveButton()}
-    </Grid>
+      <Grid container direction="column" className={classes.root}>
+        {renderFirstRow()}
+        {renderSecondRow()}
+        {renderThirdRow()}
+        {renderFourthRow()}
+        {renderFifthRow()}
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.root}
+        >
+          <FormControlLabel
+            value="top"
+            control={
+              <Checkbox
+                color="primary"
+                checked={isExistingDiscountApplied}
+                onChange={handleisExistingDiscountApplied}
+              />
+            }
+            label="Apply existing discount"
+          />
+        </Grid>
+        {renderSixthRow()}
+        {renderSeventhRow()}
+        {renderSaveButton()}
+      </Grid>
+    </Dialog>
   );
 }
 
-export default AddVegitables;
+export default EditVegitable;
