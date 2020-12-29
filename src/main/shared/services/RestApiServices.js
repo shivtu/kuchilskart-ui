@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const httpOptions = {
-  host:
-    "http://kucchilskartstaging-env.eba-zr6pprpw.ap-south-1.elasticbeanstalk.com",
+  host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
   uri: "/api/v1",
   role: { retailer: "/retailer", users: "/users" },
   route: {
     welcome: "/welcome",
-    findAllUtilties: "/utility/find/allUtilities",
+    signUp: "/signup",
     authenticate: "/authenticate",
+    findAllUtilties: "/utility/find/allUtilities",
   },
 };
 
@@ -16,9 +16,22 @@ async function welcomeMsg() {
   const welcomeMessage = await axios({
     method: "GET",
     url:
-      "http://kucchilskartstaging-env.eba-zr6pprpw.ap-south-1.elasticbeanstalk.com/api/v1/users/welcome",
+      "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com/api/v1/users/welcome",
   });
   return welcomeMessage.data;
+}
+
+async function signUp(signUpData) {
+  const newUser = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.route.signUp}${httpOptions.role.retailer}`,
+    data: signUpData,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+  return newUser.data;
 }
 
 async function authenticateUser(userName, password) {
@@ -47,4 +60,10 @@ async function fetchUtilityData(authToken) {
 
 async function fetchAllVegitables() {}
 
-export { authenticateUser, fetchUtilityData, fetchAllVegitables, welcomeMsg };
+export {
+  signUp,
+  authenticateUser,
+  fetchUtilityData,
+  fetchAllVegitables,
+  welcomeMsg,
+};
