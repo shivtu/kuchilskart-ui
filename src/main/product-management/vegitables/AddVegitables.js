@@ -44,46 +44,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: green[400],
-    "&$checked": {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+// const GreenCheckbox = withStyles({
+//   root: {
+//     color: green[400],
+//     "&$checked": {
+//       color: green[600],
+//     },
+//   },
+//   checked: {},
+// })((props) => <Checkbox color="default" {...props} />);
 
 function AddVegitables() {
   const appData = useContext(AppContext);
-  const itemCategories = [
-    { name: "Vegitables", id: "edible_products_vegitables" },
-    { name: "Personal care", id: "edible_products_fruits" },
-    { name: "Dairy products", id: "edible_products_spices" },
-    { name: "Bakery", id: "edible_products_oil" },
-    { name: "Snaks", id: "edible_products_grains" },
-    { name: "Beverages", id: "edible_products_dal" },
-    { name: "Household cleaning", id: "fmcg_toiletaries" },
-  ];
+
+  const itemCategories = appData.utilityData.result.itemCategories.filter(
+    (category) => category.itemCategory
+  );
+
+  const taxes = appData.utilityData.result.taxes;
+  const customerOrderDiscount =
+    appData.utilityData.result.customerOrderDiscount;
+  console.log("customerOrderDiscount", customerOrderDiscount);
+  const jwtToken = appData.jwtToken;
 
   const classes = useStyles();
 
-  const [itemCategorySelected, setItemCategorySelected] = useState("");
+  const [vegitableName, setVegitableName] = useState("");
+  const [vegitableVariant, setVegitableVariant] = useState("");
+  const [vegitablesInventoryExpiry, setVegitablesInventoryExpiry] = useState(
+    ""
+  );
+  const [vegitableDescp, setVegitableDescp] = useState("");
+  const [itemCategorySelected, setItemCategorySelected] = useState([]);
+  const [itemSubCategories, setItemSubCategories] = useState([]);
+  const [subItemCategorySelected, setSubItemCategorySelected] = useState([]);
+  const [vegitableQuantity, setVegitableQuantity] = useState(0);
+  const [measurementUnit, setMeasurementUnit] = useState("");
+  const [
+    vegitableInventoryFixedCost,
+    setVegitableInventoryFixedCost,
+  ] = useState(0);
   const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
     true
   );
-  const [measurementUnit, setMeasurementUnit] = useState("");
 
-  function handleMeasurementUnitSelect(event) {
-    setMeasurementUnit(event.target.value);
-  }
-
-  function handleisExistingDiscountApplied() {
-    setIsExistingDiscountApplied(!isExistingDiscountApplied);
-  }
-
-  function handleExpiryDate(event) {
-    console.log("event", Date.now());
+  function handleSave() {
+    console.log("vegitableName", vegitableName);
+    console.log("vegitablesInventoryExpiry", vegitablesInventoryExpiry);
   }
 
   function renderFirstRow() {
@@ -100,6 +107,8 @@ function AddVegitables() {
             variant="outlined"
             size="small"
             fullWidth
+            value={vegitableName}
+            onChange={(_e) => setVegitableName(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -111,6 +120,8 @@ function AddVegitables() {
             variant="outlined"
             size="small"
             fullWidth
+            value={vegitableVariant}
+            onChange={(_e) => setVegitableVariant(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -125,7 +136,7 @@ function AddVegitables() {
             fullWidth
             variant="outlined"
             size="small"
-            onChange={handleExpiryDate}
+            onChange={(_e) => setVegitablesInventoryExpiry(_e.target.value)}
           />
           <FormHelperText>
             Expiry date must always be a future date
@@ -149,6 +160,8 @@ function AddVegitables() {
             label="Description of the Fruit/Vegitable"
             variant="outlined"
             size="small"
+            value={vegitableDescp}
+            onChange={(_e) => setVegitableDescp(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -178,15 +191,20 @@ function AddVegitables() {
             fullWidth
             size="small"
             options={itemCategories}
-            getOptionLabel={(option) => option.name || ""}
+            getOptionLabel={(option) => option.itemCategory || ""}
             getOptionSelected={(option) => option}
             onChange={(event, newValue) => {
+              setItemSubCategories(
+                appData.utilityData.result.itemCategories.filter(
+                  (category) => category.itemCategory === newValue.itemCategory
+                )
+              );
               setItemCategorySelected(newValue);
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Product category name"
+                label="Product category"
                 variant="outlined"
               />
             )}
@@ -197,15 +215,27 @@ function AddVegitables() {
           </FormHelperText>
         </Grid>
         <Grid item className={classes.formComponent}>
-          <TextField
+          <Autocomplete
+            value={subItemCategorySelected}
             fullWidth
-            label="Product sub category"
-            helperText=""
-            variant="outlined"
             size="small"
+            options={itemSubCategories}
+            getOptionLabel={(option) => option.itemSubCategory || ""}
+            getOptionSelected={(option) => option}
+            onChange={(event, newValue) => {
+              setSubItemCategorySelected(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Product sub-category"
+                variant="outlined"
+              />
+            )}
           />
           <FormHelperText className={classes.cautionText}>
-            {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
+            !This item is used for bulk operations (also visible to the
+            customer)
           </FormHelperText>
         </Grid>
       </Grid>
@@ -227,6 +257,9 @@ function AddVegitables() {
             helperText="This is the total quantity brought to the warehouse"
             variant="outlined"
             size="small"
+            type="number"
+            value={vegitableQuantity}
+            onChange={(_e) => setVegitableQuantity(_e.target.value)}
           />
         </Grid>
         <Grid item>
@@ -240,17 +273,21 @@ function AddVegitables() {
             </InputLabel>
             <Select
               value={measurementUnit}
-              onChange={handleMeasurementUnitSelect}
+              onChange={(_e) => setMeasurementUnit(_e.target.value)}
               label="Measurement unit"
             >
               <MenuItem value="" disabled>
                 <em>Select</em>
               </MenuItem>
-              <MenuItem value="GRAMS">Gms</MenuItem>
-              <MenuItem value="KILOGRAMS">Kg</MenuItem>
-              <MenuItem value="TON">Ton</MenuItem>
+              <MenuItem value="Grams">Grams</MenuItem>
+              <MenuItem value="KG">Kilogram(s)</MenuItem>
+              <MenuItem value="Ltrs">Liter(s)</MenuItem>
+              <MenuItem value="Ml">Mililiter(s)</MenuItem>
+              <MenuItem value="TON">Ton(s)</MenuItem>
               <MenuItem value="DOZEN">Dozen</MenuItem>
               <MenuItem value="PEICE">Peice</MenuItem>
+              <MenuItem value="UNIT">Unit</MenuItem>
+              <MenuItem value="PACK">Pack</MenuItem>
             </Select>
             <FormHelperText>
               Cost is spread as per measurement unit
@@ -275,6 +312,7 @@ function AddVegitables() {
           helperText="This value is not visible to the user (for internal user only)"
           variant="outlined"
           size="small"
+          type="number"
         />
 
         <TextField
@@ -283,6 +321,9 @@ function AddVegitables() {
           helperText="This value is not visible to the user (for internal user only)"
           variant="outlined"
           size="small"
+          type="number"
+          value={vegitableInventoryFixedCost}
+          onChange={(_e) => setVegitableInventoryFixedCost(_e.target.value)}
         />
       </Grid>
     );
@@ -302,8 +343,14 @@ function AddVegitables() {
               <Autocomplete
                 fullWidth
                 size="small"
-                options={[]}
-                getOptionLabel={(option) => option.title}
+                options={customerOrderDiscount}
+                getOptionLabel={(option) =>
+                  `${option.discountName} (${
+                    option.discountActive ? "Active" : "In-Active"
+                  })`
+                }
+                getOptionSelected={(option) => option}
+                onChange={(event, newValue) => {}}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -354,6 +401,7 @@ function AddVegitables() {
                 helperText="Absolute discount is calculated automatically"
                 variant="outlined"
                 size="small"
+                type="number"
               />
             </Grid>
           </>
@@ -373,7 +421,7 @@ function AddVegitables() {
         <Autocomplete
           className={classes.formComponent}
           size="small"
-          options={[]}
+          options={taxes}
           getOptionLabel={(option) => option.title}
           renderInput={(params) => (
             <TextField
@@ -405,7 +453,12 @@ function AddVegitables() {
         alignItems="center"
         className={classes.saveAndResetButtons}
       >
-        <Button variant="contained" color="primary" disabled>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled
+          onClick={handleSave}
+        >
           {CONSTANTS.BUTTONS.SAVE}
         </Button>
       </Grid>
@@ -432,7 +485,9 @@ function AddVegitables() {
             <Checkbox
               color="primary"
               checked={isExistingDiscountApplied}
-              onChange={handleisExistingDiscountApplied}
+              onChange={() =>
+                setIsExistingDiscountApplied(!isExistingDiscountApplied)
+              }
             />
           }
           label="Apply existing discount"
