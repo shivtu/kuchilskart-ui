@@ -1,9 +1,17 @@
-node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-#production
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
 /build
 
-#misc
+# misc
 .DS_Store
 .env.local
 .env.development.local
@@ -13,7 +21,6 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-dist/
-node_modules/
+dist/kucchilskart Setup 0.1.0.exe
 package-lock.json
-.eslintcache
+dist/
