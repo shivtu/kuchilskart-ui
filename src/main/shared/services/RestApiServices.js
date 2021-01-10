@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const httpOptions = {
-  host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
+  // host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
+  host: "http://192.168.0.107:5000",
   uri: "/api/v1",
   role: { retailer: "/retailer", users: "/users" },
   route: {
@@ -9,6 +10,7 @@ const httpOptions = {
     signUp: "/signup",
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
+    createVegitable: "/vegitables/add",
   },
 };
 
@@ -58,6 +60,19 @@ async function fetchUtilityData(authToken) {
   return utilityData.data;
 }
 
+async function createNewVegitable(authToken, data) {
+  const newVegitable = await axios({
+    method: "post",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createVegitable}`,
+    data: data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${authToken}`,
+    },
+  });
+  return newVegitable.data;
+}
+
 async function fetchAllVegitables() {}
 
 export {
@@ -66,4 +81,5 @@ export {
   fetchUtilityData,
   fetchAllVegitables,
   welcomeMsg,
+  createNewVegitable,
 };

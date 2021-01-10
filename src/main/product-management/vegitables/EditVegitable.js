@@ -67,9 +67,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
   }
 
-  function handleExpiryDate(event) {
-    console.log("event", Date.now());
-  }
+  function handleExpiryDate(event) {}
 
   function renderFirstRow() {
     return (

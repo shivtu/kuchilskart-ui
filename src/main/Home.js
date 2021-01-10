@@ -6,13 +6,12 @@ import { utilityData } from "./shared/MockData";
 export const AppContext = createContext(null);
 
 export const Home = () => {
-  // const [appData, setAppData] = useState("");
-  const [appData, setAppData] = useState(utilityData);
+  const [appData, setAppData] = useState("");
+  // const [appData, setAppData] = useState(utilityData);
   const [isAppDataReady, setIsAppDataReady] = useState(false);
 
   useEffect(() => {
     setIsAppDataReady(Boolean(appData.jwtToken && appData.utilityData));
-    console.log("appData", appData);
   }, [appData]);
 
   return (

@@ -17,6 +17,7 @@ import { green, blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
 import { AppContext } from "../../Home";
 import CONSTANTS from "../../shared/Constants";
+import { createNewVegitable } from "../../shared/services/RestApiServices";
 
 import { getItemCategories } from "./VegitableUtils";
 
@@ -76,16 +77,20 @@ function AddVegitables() {
   const [vegitableDescp, setVegitableDescp] = useState("");
   const [itemCategorySelected, setItemCategorySelected] = useState([]);
   const [itemSubCategories, setItemSubCategories] = useState([]);
-  const [subItemCategorySelected, setSubItemCategorySelected] = useState([]);
+  const [itemSubCategorySelected, setItemSubCategorySelected] = useState([]);
   const [vegitableQuantity, setVegitableQuantity] = useState(0);
   const [measurementUnit, setMeasurementUnit] = useState("");
+  const [costPrice, setCostPrice] = useState(0);
   const [
     vegitableInventoryFixedCost,
     setVegitableInventoryFixedCost,
   ] = useState(0);
+  const [sellingPrice, setSellingPrice] = useState(0);
   const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
     true
   );
+  const [discountNameSelected, setDiscountNameSelected] = useState("");
+  const [showDiscount, setShowDiscount] = useState(true);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [taxName, setTaxName] = useState("");
   const [taxPercent, setTaxPercent] = useState(0);
@@ -97,33 +102,40 @@ function AddVegitables() {
         vegitableDescp &&
         vegitableQuantity &&
         itemCategorySelected &&
-        subItemCategorySelected &&
+        itemSubCategorySelected &&
         vegitableQuantity &&
         measurementUnit
     );
   }
 
-  function handleSave() {
-    const data = new FormData();
-    data.append("vegitableName", vegitableName);
-    data.append("vegitableVariant", vegitableVariant);
-    data.append("vegitableDescp", vegitableDescp);
-    data.append("vegitableApplicableTaxes", taxName);
-    data.append("vegitableSellingPrice", "30");
-    data.append("vegitableOfferedDiscount", "2");
-    data.append("vegitableShowDiscount", "false");
-    data.append("vegitableQuantity", "30");
-    data.append("vegitableAvailable", "true");
-    data.append("vegitableMeasureMentUnit", "KG");
-    data.append("vegitableInventoryCostPrice", "27.5");
-    data.append("vegitableInventoryExpiry", "2021-07-05");
-    data.append("vegitableInventoryFixedCost", "500");
-    data.append("[vegitableRecepie][recipeName]", "Onion pakodas");
-    data.append("[vegitableRecepie][recipeGuide]", "youtube/recepie");
-    data.append("[vegitableRecepie][recipeComponents]", '["component"]');
-    data.append("vegitableOfferedDiscountName", "Loyalty discount");
-    data.append("itemCategory", "Fruits & Vegitables");
-    data.append("itemSubCategory", "Fruits");
+  async function handleSave() {
+    try {
+      const data = new FormData();
+      data.append("vegitableName", vegitableName);
+      data.append("vegitableVariant", vegitableVariant);
+      data.append("vegitableDescp", vegitableDescp);
+      data.append("vegitableApplicableTaxes", taxName);
+      data.append("vegitableSellingPrice", sellingPrice);
+      data.append("vegitableOfferedDiscount", discountPercentage);
+      data.append("vegitableShowDiscount", showDiscount);
+      data.append("vegitableQuantity", vegitableQuantity);
+      data.append("vegitableAvailable", "true");
+      data.append("vegitableMeasureMentUnit", measurementUnit);
+      data.append("vegitableInventoryCostPrice", costPrice);
+      data.append("vegitableInventoryExpiry", vegitablesInventoryExpiry);
+      data.append("vegitableInventoryFixedCost", vegitableInventoryFixedCost);
+      // data.append("[vegitableRecepie][recipeName]", "Onion pakodas");
+      // data.append("[vegitableRecepie][recipeGuide]", "youtube/recepie");
+      // data.append("[vegitableRecepie][recipeComponents]", '["component"]');
+      data.append("vegitableOfferedDiscountName", discountNameSelected);
+      data.append("itemCategory", itemCategorySelected.itemCategory);
+      data.append("itemSubCategory", itemSubCategorySelected.itemSubCategory);
+      const res = await createNewVegitable(jwtToken, data);
+      console.log("Vegitable", res[0].vegitable);
+      console.log("VegitableInventory", res[0].vegitableInventory);
+    } catch (err) {
+      console.log("err", err);
+    }
   }
 
   function renderFirstRow() {
@@ -164,7 +176,7 @@ function AddVegitables() {
           <TextField
             label="Expiry date"
             type="date"
-            defaultValue="2020-05-24"
+            defaultValue="2021-05-24"
             className={classes.textField}
             fullWidth
             variant="outlined"
@@ -249,14 +261,14 @@ function AddVegitables() {
         </Grid>
         <Grid item className={classes.formComponent}>
           <Autocomplete
-            value={subItemCategorySelected}
+            value={itemSubCategorySelected}
             fullWidth
             size="small"
             options={itemSubCategories}
             getOptionLabel={(option) => option.itemSubCategory || ""}
             getOptionSelected={(option) => option}
             onChange={(event, newValue) => {
-              setSubItemCategorySelected(newValue);
+              setItemSubCategorySelected(newValue);
             }}
             renderInput={(params) => (
               <TextField
@@ -339,25 +351,47 @@ function AddVegitables() {
         alignItems="center"
         className={classes.root}
       >
-        <TextField
-          className={classes.formComponent}
-          label="Net cost price"
-          helperText="This value is not visible to the user (for internal user only)"
-          variant="outlined"
-          size="small"
-          type="number"
-        />
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Cost price"
+            fullWidth
+            variant="outlined"
+            size="small"
+            type="number"
+            value={costPrice}
+            onChange={(_e) => setCostPrice(_e.target.value)}
+          />
+          <FormHelperText>
+            This value is not visible to the user(internal use only)
+          </FormHelperText>
+        </Grid>
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Fixed cost"
+            fullWidth
+            variant="outlined"
+            size="small"
+            type="number"
+            value={vegitableInventoryFixedCost}
+            onChange={(_e) => setVegitableInventoryFixedCost(_e.target.value)}
+          />
+          <FormHelperText>
+            This value is not visible to the user(internal use only)
+          </FormHelperText>
+        </Grid>
 
-        <TextField
-          className={classes.formComponent}
-          label="Fixed cost"
-          helperText="This value is not visible to the user (for internal user only)"
-          variant="outlined"
-          size="small"
-          type="number"
-          value={vegitableInventoryFixedCost}
-          onChange={(_e) => setVegitableInventoryFixedCost(_e.target.value)}
-        />
+        <Grid item className={classes.threeInARow}>
+          <TextField
+            label="Selling price"
+            fullWidth
+            variant="outlined"
+            size="small"
+            type="number"
+            value={sellingPrice}
+            onChange={(_e) => setSellingPrice(_e.target.value)}
+          />
+          <FormHelperText>This value is visible to the user</FormHelperText>
+        </Grid>
       </Grid>
     );
   }
@@ -384,6 +418,7 @@ function AddVegitables() {
                 }
                 getOptionSelected={(option) => option}
                 onChange={(event, newValue) => {
+                  setDiscountNameSelected(newValue.discountName);
                   setDiscountPercentage(newValue?.discountPercentage);
                 }}
                 renderInput={(params) => (
@@ -410,9 +445,10 @@ function AddVegitables() {
             <Grid item className={classes.threeInARow}>
               <FormControlLabel
                 labelPlacement="end"
-                control={<Checkbox checked color="primary" />}
+                control={<Checkbox checked={showDiscount} color="primary" />}
                 label="Show this discout to customer"
                 size="small"
+                onClick={() => setShowDiscount(!showDiscount)}
               />
               <FormHelperText>
                 If you uncheck this box, customer will not avail this discount
