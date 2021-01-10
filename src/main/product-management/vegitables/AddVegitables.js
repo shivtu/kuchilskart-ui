@@ -18,6 +18,8 @@ import { Autocomplete } from "@material-ui/lab";
 import { AppContext } from "../../Home";
 import CONSTANTS from "../../shared/Constants";
 
+import { getItemCategories } from "./VegitableUtils";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -57,14 +59,11 @@ const useStyles = makeStyles((theme) => ({
 function AddVegitables() {
   const appData = useContext(AppContext);
 
-  const itemCategories = appData.utilityData.result.itemCategories.filter(
-    (category) => category.itemCategory
-  );
+  const itemCategories = getItemCategories(appData);
 
   const taxes = appData.utilityData.result.taxes;
   const customerOrderDiscount =
     appData.utilityData.result.customerOrderDiscount;
-  console.log("customerOrderDiscount", customerOrderDiscount);
   const jwtToken = appData.jwtToken;
 
   const classes = useStyles();
@@ -87,10 +86,44 @@ function AddVegitables() {
   const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
     true
   );
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [taxName, setTaxName] = useState("");
+  const [taxPercent, setTaxPercent] = useState(0);
+
+  function shouldDisableSave() {
+    return Boolean(
+      vegitableName &&
+        vegitableVariant &&
+        vegitableDescp &&
+        vegitableQuantity &&
+        itemCategorySelected &&
+        subItemCategorySelected &&
+        vegitableQuantity &&
+        measurementUnit
+    );
+  }
 
   function handleSave() {
-    console.log("vegitableName", vegitableName);
-    console.log("vegitablesInventoryExpiry", vegitablesInventoryExpiry);
+    const data = new FormData();
+    data.append("vegitableName", vegitableName);
+    data.append("vegitableVariant", vegitableVariant);
+    data.append("vegitableDescp", vegitableDescp);
+    data.append("vegitableApplicableTaxes", taxName);
+    data.append("vegitableSellingPrice", "30");
+    data.append("vegitableOfferedDiscount", "2");
+    data.append("vegitableShowDiscount", "false");
+    data.append("vegitableQuantity", "30");
+    data.append("vegitableAvailable", "true");
+    data.append("vegitableMeasureMentUnit", "KG");
+    data.append("vegitableInventoryCostPrice", "27.5");
+    data.append("vegitableInventoryExpiry", "2021-07-05");
+    data.append("vegitableInventoryFixedCost", "500");
+    data.append("[vegitableRecepie][recipeName]", "Onion pakodas");
+    data.append("[vegitableRecepie][recipeGuide]", "youtube/recepie");
+    data.append("[vegitableRecepie][recipeComponents]", '["component"]');
+    data.append("vegitableOfferedDiscountName", "Loyalty discount");
+    data.append("itemCategory", "Fruits & Vegitables");
+    data.append("itemSubCategory", "Fruits");
   }
 
   function renderFirstRow() {
@@ -196,7 +229,7 @@ function AddVegitables() {
             onChange={(event, newValue) => {
               setItemSubCategories(
                 appData.utilityData.result.itemCategories.filter(
-                  (category) => category.itemCategory === newValue.itemCategory
+                  (category) => category.itemCategory === newValue?.itemCategory
                 )
               );
               setItemCategorySelected(newValue);
@@ -350,7 +383,9 @@ function AddVegitables() {
                   })`
                 }
                 getOptionSelected={(option) => option}
-                onChange={(event, newValue) => {}}
+                onChange={(event, newValue) => {
+                  setDiscountPercentage(newValue?.discountPercentage);
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -369,6 +404,7 @@ function AddVegitables() {
                 variant="outlined"
                 size="small"
                 disabled
+                value={`${discountPercentage || 0} %`}
               />
             </Grid>
             <Grid item className={classes.threeInARow}>
@@ -422,7 +458,12 @@ function AddVegitables() {
           className={classes.formComponent}
           size="small"
           options={taxes}
-          getOptionLabel={(option) => option.title}
+          getOptionLabel={(option) => option.taxName || ""}
+          getOptionSelected={(option) => option}
+          onChange={(event, newValue) => {
+            setTaxName(newValue.taxName);
+            setTaxPercent(newValue?.taxPercent);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -440,6 +481,7 @@ function AddVegitables() {
           variant="outlined"
           size="small"
           disabled
+          value={`${taxPercent || 0} %`}
         />
       </Grid>
     );
@@ -456,7 +498,7 @@ function AddVegitables() {
         <Button
           variant="contained"
           color="primary"
-          disabled
+          disabled={!shouldDisableSave()}
           onClick={handleSave}
         >
           {CONSTANTS.BUTTONS.SAVE}
