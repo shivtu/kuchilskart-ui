@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const httpOptions = {
-  // host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
-  host: "http://192.168.0.107:5000",
+  host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
+  // host: "http://192.168.0.107:5000",
   uri: "/api/v1",
   role: { retailer: "/retailer", users: "/users" },
   route: {

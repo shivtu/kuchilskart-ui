@@ -15,7 +15,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { signUp } from "./shared/services/RestApiServices";
 import Spinner from "./shared/common/Spinner";
-import CONSTANTS from "../main/shared/Constants";
+import CONSTANTS from "./shared/Constants";
 
 const useStyles = makeStyles((theme) => ({
   signUpForm: {

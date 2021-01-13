@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   TextField,
@@ -13,11 +13,12 @@ import {
   Select,
   FormHelperText,
 } from "@material-ui/core";
-import { green, blue } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
 import { AppContext } from "../../Home";
 import CONSTANTS from "../../shared/Constants";
 import { createNewVegitable } from "../../shared/services/RestApiServices";
+import OkButtonDialog from "../../shared/common/OkButtonDialog";
 
 import { getItemCategories } from "./VegitableUtils";
 
@@ -47,16 +48,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const GreenCheckbox = withStyles({
-//   root: {
-//     color: green[400],
-//     "&$checked": {
-//       color: green[600],
-//     },
-//   },
-//   checked: {},
-// })((props) => <Checkbox color="default" {...props} />);
-
 function AddVegitables() {
   const appData = useContext(AppContext);
 
@@ -72,7 +63,7 @@ function AddVegitables() {
   const [vegitableName, setVegitableName] = useState("");
   const [vegitableVariant, setVegitableVariant] = useState("");
   const [vegitablesInventoryExpiry, setVegitablesInventoryExpiry] = useState(
-    ""
+    "2021-05-24"
   );
   const [vegitableDescp, setVegitableDescp] = useState("");
   const [itemCategorySelected, setItemCategorySelected] = useState([]);
@@ -94,6 +85,8 @@ function AddVegitables() {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [taxName, setTaxName] = useState("");
   const [taxPercent, setTaxPercent] = useState(0);
+  const [alertDialogMessage, setAlertDialogMessage] = useState("");
+  const [okButtonAlert, setOkButtonAlert] = useState(false);
 
   function shouldDisableSave() {
     return Boolean(
@@ -131,10 +124,18 @@ function AddVegitables() {
       data.append("itemCategory", itemCategorySelected.itemCategory);
       data.append("itemSubCategory", itemSubCategorySelected.itemSubCategory);
       const res = await createNewVegitable(jwtToken, data);
-      console.log("Vegitable", res[0].vegitable);
-      console.log("VegitableInventory", res[0].vegitableInventory);
+      if (res.statusCode !== 201) {
+        setOkButtonAlert(true);
+        setAlertDialogMessage(res.statusMessage || "An unknown error occured");
+        return;
+      }
+      setOkButtonAlert(true);
+      setAlertDialogMessage(
+        `${res.result[0].vegitable.vegitableName} created!`
+      );
     } catch (err) {
-      console.log("err", err);
+      setOkButtonAlert(true);
+      setAlertDialogMessage(err.message || "An unknown error occured");
     }
   }
 
@@ -176,7 +177,7 @@ function AddVegitables() {
           <TextField
             label="Expiry date"
             type="date"
-            defaultValue="2021-05-24"
+            value={vegitablesInventoryExpiry}
             className={classes.textField}
             fullWidth
             variant="outlined"
@@ -545,6 +546,13 @@ function AddVegitables() {
 
   return (
     <Grid container direction="column" className={classes.root}>
+      {okButtonAlert && (
+        <OkButtonDialog
+          setOkButtonAlert={setOkButtonAlert}
+          title="Network error"
+          message={alertDialogMessage}
+        />
+      )}
       {renderFirstRow()}
       {renderSecondRow()}
       {renderThirdRow()}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CONSTANTS from "../main/shared/Constants";
+import CONSTANTS from "./shared/Constants";
 import OkButtonDialog from "./shared/common/OkButtonDialog";
 import Spinner from "./shared/common/Spinner";
 import { Button, Grid, Link, TextField, Typography } from "@material-ui/core";

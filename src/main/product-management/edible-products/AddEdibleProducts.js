@@ -70,9 +70,7 @@ function AddEdibleProducts() {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
   }
 
-  function handleExpiryDate(event) {
-    console.log("event", Date.now());
-  }
+  function handleExpiryDate(event) {}
 
   const classes = useStyles();
   return (
