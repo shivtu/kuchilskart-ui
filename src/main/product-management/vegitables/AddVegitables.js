@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddVegitables() {
+function AddVegitables({ findAllVegitables }) {
   const appData = useContext(AppContext);
 
   const itemCategories = getItemCategories(appData);
@@ -117,9 +117,6 @@ function AddVegitables() {
       data.append("vegitableInventoryCostPrice", costPrice);
       data.append("vegitableInventoryExpiry", vegitablesInventoryExpiry);
       data.append("vegitableInventoryFixedCost", vegitableInventoryFixedCost);
-      // data.append("[vegitableRecepie][recipeName]", "Onion pakodas");
-      // data.append("[vegitableRecepie][recipeGuide]", "youtube/recepie");
-      // data.append("[vegitableRecepie][recipeComponents]", '["component"]');
       data.append("vegitableOfferedDiscountName", discountNameSelected);
       data.append("itemCategory", itemCategorySelected.itemCategory);
       data.append("itemSubCategory", itemSubCategorySelected.itemSubCategory);
@@ -133,6 +130,7 @@ function AddVegitables() {
       setAlertDialogMessage(
         `${res.result[0].vegitable.vegitableName} created!`
       );
+      findAllVegitables(jwtToken);
     } catch (err) {
       setOkButtonAlert(true);
       setAlertDialogMessage(err.message || "An unknown error occured");

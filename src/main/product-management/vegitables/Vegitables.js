@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Grid, Typography } from "@material-ui/core";
 
 import CONSTANTS from "../../shared/Constants";
 import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
 import AddVegitables from "../vegitables/AddVegitables";
 import ViewAndEditVegitables from "./ViewAndEditVegitables";
+import Spinner from "../../shared/common/Spinner";
+import { AppContext } from "../../Home";
+import { getAllVegitables } from "../../shared/services/RestApiServices";
 
-function Vegitables() {
+function Vegitables({ vegitableTable, updateVegitableTable }) {
+  const appData = useContext(AppContext);
+  const jwtToken = appData.jwtToken;
+
+  const [vegitables, setVegitables] = useState("");
+  const [spinner, setSpinner] = useState(true);
   const [currentRadioOption, setCurrentRadioOption] = useState(
     CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
   );
@@ -17,20 +25,45 @@ function Vegitables() {
     },
   };
 
+  async function findAllVegitables() {
+    setSpinner(true);
+    const res = await getAllVegitables(jwtToken);
+    if (res.result) {
+      console.log("API call made");
+      setVegitables(res);
+      setSpinner(false);
+      setCurrentRadioOption(
+        CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
+      );
+    }
+    return res;
+  }
+
+  useEffect(() => {
+    findAllVegitables();
+  }, []);
+
   return (
-    <Grid container direction="column">
-      <Grid container justify="center" alignItems="center">
-        <Typography variant="h6" style={styles.pageTitle}>
-          {CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
-        </Typography>
-        <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
-      </Grid>
-      {currentRadioOption === CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
-        <AddVegitables />
+    <>
+      {spinner ? (
+        <Spinner size={100} />
       ) : (
-        <ViewAndEditVegitables />
+        <Grid container direction="column">
+          <Grid container justify="center" alignItems="center">
+            <Typography variant="h6" style={styles.pageTitle}>
+              {CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
+            </Typography>
+            <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
+          </Grid>
+          {currentRadioOption ===
+          CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
+            <AddVegitables findAllVegitables={findAllVegitables} />
+          ) : (
+            <ViewAndEditVegitables vegitables={vegitables} />
+          )}
+        </Grid>
       )}
-    </Grid>
+    </>
   );
 }
 

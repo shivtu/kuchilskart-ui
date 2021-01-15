@@ -11,6 +11,7 @@ const httpOptions = {
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
     createVegitable: "/vegitables/add",
+    findAllVegitables: "/vegitables/findall",
   },
 };
 
@@ -73,6 +74,17 @@ async function createNewVegitable(authToken, data) {
   return newVegitable.data;
 }
 
+async function getAllVegitables(authToken) {
+  const allVegitables = await axios({
+    method: "GET",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegitables}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  });
+  return allVegitables.data;
+}
+
 async function fetchAllVegitables() {}
 
 export {
@@ -82,4 +94,5 @@ export {
   fetchAllVegitables,
   welcomeMsg,
   createNewVegitable,
+  getAllVegitables,
 };
