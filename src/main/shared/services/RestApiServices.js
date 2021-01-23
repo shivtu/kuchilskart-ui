@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const httpOptions = {
-  host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
-  // host: "http://192.168.0.107:5000",
+  // host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
+  host: "http://192.168.0.107:5000",
   uri: "/api/v1",
   role: { retailer: "/retailer", users: "/users" },
   route: {
@@ -11,7 +11,8 @@ const httpOptions = {
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
     createVegitable: "/vegitables/add",
-    findAllVegitables: "/vegitables/findall",
+    findAllVegitables: "/vegitables/findAll",
+    createNewTax: "/taxes/add",
   },
 };
 
@@ -87,6 +88,19 @@ async function getAllVegitables(authToken) {
 
 async function fetchAllVegitables() {}
 
+async function createNewTax(authToken, data) {
+  const newTax = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewTax}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newTax.data;
+}
+
 export {
   signUp,
   authenticateUser,
@@ -95,4 +109,5 @@ export {
   welcomeMsg,
   createNewVegitable,
   getAllVegitables,
+  createNewTax,
 };

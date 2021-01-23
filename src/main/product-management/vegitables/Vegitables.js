@@ -29,7 +29,6 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
     setSpinner(true);
     const res = await getAllVegitables(jwtToken);
     if (res.result) {
-      console.log("API call made");
       setVegitables(res);
       setSpinner(false);
       setCurrentRadioOption(
@@ -46,7 +45,9 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   return (
     <>
       {spinner ? (
-        <Spinner size={100} />
+        <Grid container justify="center" alignItems="center">
+          <Spinner size={100} />
+        </Grid>
       ) : (
         <Grid container direction="column">
           <Grid container justify="center" alignItems="center">
