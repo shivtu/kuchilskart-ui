@@ -101,7 +101,7 @@ async function createNewTax(authToken, data) {
 }
 
 async function createNewCategory(authToken, data) {
-  const newCategory = axios({
+  const newCategory = await axios({
     method: "POST",
     url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewItemCategory}`,
     data: data,
@@ -110,6 +110,7 @@ async function createNewCategory(authToken, data) {
       "Content-Type": "application/json",
     },
   });
+  return newCategory.data;
 }
 
 export {
