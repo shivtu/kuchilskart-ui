@@ -45,7 +45,7 @@ function Login({ setAppData }) {
     try {
       if (!userIdText || !userPasswordText) {
         setOkButtonAlert(true);
-        setOkButtonAlertTitle("Invalid input");
+        setOkButtonAlertTitle(CONSTANTS.HELPER_TEXT.INVALID_INPUT);
         setOkButtonAlertMessage("Username/password are mandatory fields");
         return;
       }

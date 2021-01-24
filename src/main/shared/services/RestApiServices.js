@@ -13,6 +13,7 @@ const httpOptions = {
     createVegitable: "/vegitables/add",
     findAllVegitables: "/vegitables/findAll",
     createNewTax: "/taxes/add",
+    createNewItemCategory: "/itemCategory/create",
   },
 };
 
@@ -86,8 +87,6 @@ async function getAllVegitables(authToken) {
   return allVegitables.data;
 }
 
-async function fetchAllVegitables() {}
-
 async function createNewTax(authToken, data) {
   const newTax = await axios({
     method: "POST",
@@ -101,13 +100,25 @@ async function createNewTax(authToken, data) {
   return newTax.data;
 }
 
+async function createNewCategory(authToken, data) {
+  const newCategory = axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewItemCategory}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 export {
   signUp,
   authenticateUser,
   fetchUtilityData,
-  fetchAllVegitables,
   welcomeMsg,
   createNewVegitable,
   getAllVegitables,
   createNewTax,
+  createNewCategory,
 };

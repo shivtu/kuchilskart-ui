@@ -61,10 +61,10 @@ export default function TaxesTab() {
         );
         setTaxName("");
         setTaxPercent(0);
-        additionalTaxInfo("");
+        setAdditionalTaxInfo("");
       } else {
         setOkButtonAlert(true);
-        setOkButtonAlertTitle("Invalid data");
+        setOkButtonAlertTitle(CONSTANTS.HELPER_TEXT.INVALID_INPUT);
         setOkButtonAlertMessage("Tax name is required");
       }
       setSpinner(false);

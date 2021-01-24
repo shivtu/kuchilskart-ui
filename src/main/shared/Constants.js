@@ -49,6 +49,7 @@ const CONSTANTS = {
   },
   HELPER_TEXT: {
     VISIBLE_ON_APP: "This is visible to customer on mobile app!",
+    INVALID_INPUT: "Invalid input",
   },
   BUTTONS: {
     OK: "Ok",
