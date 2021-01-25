@@ -26,16 +26,20 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   };
 
   async function findAllVegitables() {
-    setSpinner(true);
-    const res = await getAllVegitables(jwtToken);
-    if (res.result) {
-      setVegitables(res);
+    try {
+      setSpinner(true);
+      const res = await getAllVegitables(jwtToken);
+      if (res.result) {
+        setVegitables(res);
+        setCurrentRadioOption(
+          CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
+        );
+      }
       setSpinner(false);
-      setCurrentRadioOption(
-        CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
-      );
+      return res;
+    } catch (err) {
+      setSpinner(false);
     }
-    return res;
   }
 
   useEffect(() => {
