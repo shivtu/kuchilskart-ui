@@ -9,7 +9,7 @@ export const Home = () => {
   const [appData, setAppData] = useState("");
   // const [appData, setAppData] = useState(utilityData);
   const [isAppDataReady, setIsAppDataReady] = useState(false);
-
+  const utilities = { appData, setAppData };
   useEffect(() => {
     setIsAppDataReady(Boolean(appData.jwtToken && appData.utilityData));
   }, [appData]);
@@ -17,7 +17,7 @@ export const Home = () => {
   return (
     <>
       {isAppDataReady ? (
-        <AppContext.Provider value={appData}>
+        <AppContext.Provider value={utilities}>
           <NavigationMenu />
         </AppContext.Provider>
       ) : (

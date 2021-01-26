@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AddVegitables({ findAllVegitables }) {
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
 
   const itemCategories = getItemCategories(appData);
 

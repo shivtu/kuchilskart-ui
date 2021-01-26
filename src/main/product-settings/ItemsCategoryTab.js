@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemsCategoryTab() {
   const classes = useStyles();
 
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
   const [itemCategory, setItemCategory] = useState("");

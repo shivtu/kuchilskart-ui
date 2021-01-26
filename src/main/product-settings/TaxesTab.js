@@ -45,7 +45,7 @@ export default function TaxesTab() {
   const [okButtonAlertTitle, setOkButtonAlertTitle] = useState("");
   const [okButtonAlertMessage, setOkButtonAlertMessage] = useState("");
 
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
   async function handleCreateNewTax() {

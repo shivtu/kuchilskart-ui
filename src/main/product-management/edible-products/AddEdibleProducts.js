@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AddEdibleProducts() {
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
 
   const itemCategories = [
     { name: "Vegitables", id: "edible_products_vegitables" },

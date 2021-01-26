@@ -10,7 +10,7 @@ import { AppContext } from "../../Home";
 import { getAllVegitables } from "../../shared/services/RestApiServices";
 
 function Vegitables({ vegitableTable, updateVegitableTable }) {
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
   const [vegitables, setVegitables] = useState("");
