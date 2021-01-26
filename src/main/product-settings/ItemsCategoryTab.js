@@ -12,6 +12,7 @@ import OkButtonDialog from "../shared/common/OkButtonDialog";
 import Spinner from "../shared/common/Spinner";
 import { createNewCategory } from "../shared/services/RestApiServices";
 import { AppContext } from "../Home";
+import { fetchUtilityData } from "../shared/services/RestApiServices";
 
 const useStyles = makeStyles((theme) => ({
   formComponent: {
@@ -65,10 +66,21 @@ export default function ItemsCategoryTab() {
       } else {
         const data = { itemCategory, itemSubCategory, itemCategoryInfo };
         const res = await createNewCategory(jwtToken, data);
-        renderAlertDialog(
-          CONSTANTS.HELPER_TEXT.INVALID_INPUT,
-          `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}`
-        );
+        if (res.result) {
+          renderAlertDialog(
+            CONSTANTS.HELPER_TEXT.INVALID_INPUT,
+            `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}\n Updating app data`
+          );
+          const utilityData = await fetchUtilityData(jwtToken);
+          if (utilityData.result) {
+            setAppData({ jwtToken, utilityData });
+          } else {
+            renderAlertDialog(
+              CONSTANTS.HELPER_TEXT.ERROR,
+              "Unable to update app data, please re-login to fix this"
+            );
+          }
+        }
       }
       setSpinner(false);
     } catch (err) {

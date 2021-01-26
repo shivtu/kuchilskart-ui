@@ -11,7 +11,10 @@ import {
 } from "@material-ui/core";
 import Spinner from "../shared/common/Spinner";
 import { AppContext } from "../Home";
-import { createNewTax } from "../shared/services/RestApiServices";
+import {
+  createNewTax,
+  fetchUtilityData,
+} from "../shared/services/RestApiServices";
 import OkButtonDialog from "../shared/common/OkButtonDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,31 +51,43 @@ export default function TaxesTab() {
   const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
+  function renderAlertDialog(dialogTitle, dialogMsg) {
+    setOkButtonAlert(true);
+    setOkButtonAlertTitle(dialogTitle);
+    setOkButtonAlertMessage(dialogMsg);
+  }
+
+  function resetForm() {
+    setTaxName("");
+    setTaxPercent(0);
+    setAdditionalTaxInfo("");
+  }
+
   async function handleCreateNewTax() {
     try {
       setSpinner(true);
       if (taxName) {
         const data = { taxName, taxPercent, additionalTaxInfo };
         const res = await createNewTax(jwtToken, data);
-        setOkButtonAlert(true);
-        setOkButtonAlertTitle("Tax created!");
-        setOkButtonAlertMessage(
+        renderAlertDialog(
+          "Tax created!",
           `${res.result[0].taxName} created @ ${res.result[0].taxPercent}%`
         );
-        setTaxName("");
-        setTaxPercent(0);
-        setAdditionalTaxInfo("");
+        const utilityData = fetchUtilityData(jwtToken);
+        if (utilityData.result) {
+          setAppData({ jwtToken, utilityData });
+        }
+        resetForm();
       } else {
-        setOkButtonAlert(true);
-        setOkButtonAlertTitle(CONSTANTS.HELPER_TEXT.INVALID_INPUT);
-        setOkButtonAlertMessage("Tax name is required");
+        renderAlertDialog(
+          CONSTANTS.HELPER_TEXT.INVALID_INPUT,
+          "Tax name is required"
+        );
       }
       setSpinner(false);
     } catch (err) {
       setSpinner(false);
-      setOkButtonAlert(true);
-      setOkButtonAlertTitle("Tax created!");
-      setOkButtonAlertMessage(`Request failed : ${err}`);
+      renderAlertDialog("Tax created!", `Network request failed : ${err}`);
     }
   }
 
