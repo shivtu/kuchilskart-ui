@@ -39,10 +39,6 @@ function a11yProps(index) {
 
 export default function ProductSettingsTabs(props) {
   const [value, setValue] = React.useState(0);
-  const [isDiscountActive, setIsDiscountActive] = useState(false);
-  const [isDiscountActiveLabel, setIsDiscountActiveLabel] = useState(
-    "INACTIVE"
-  );
   const [overrideDeliveryCharges, setOverrideDeliveryCharges] = useState(false);
   const [
     overrideDeliveryChargesLabel,
@@ -53,24 +49,14 @@ export default function ProductSettingsTabs(props) {
     setValue(newValue);
   };
 
-  function handleDiscountState() {
-    setIsDiscountActive(!isDiscountActive);
-  }
-
-  useEffect(() => {
-    isDiscountActive
-      ? setIsDiscountActiveLabel("ACTIVE")
-      : setIsDiscountActiveLabel("INACTIVE");
-  }, [isDiscountActive]);
-
   function handleDeliveryChargesOverride() {
     setOverrideDeliveryCharges(!overrideDeliveryCharges);
   }
 
   useEffect(() => {
     overrideDeliveryCharges
-      ? setOverrideDeliveryChargesLabel("OVERRIDEN")
-      : setOverrideDeliveryChargesLabel("APPLIED");
+      ? setOverrideDeliveryChargesLabel("APPLIED")
+      : setOverrideDeliveryChargesLabel("OVERRIDEN");
   }, [overrideDeliveryCharges]);
 
   return (
@@ -92,11 +78,7 @@ export default function ProductSettingsTabs(props) {
         <ItemsCategoryTab />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <DiscountsTab
-          isDiscountActiveLabel={isDiscountActiveLabel}
-          isDiscountActive={isDiscountActive}
-          handleDiscountState={handleDiscountState}
-        />
+        <DiscountsTab />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <DeliveryChargesTab

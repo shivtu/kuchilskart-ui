@@ -73,7 +73,7 @@ export default function TaxesTab() {
           "Tax created!",
           `${res.result[0].taxName} created @ ${res.result[0].taxPercent}%`
         );
-        const utilityData = fetchUtilityData(jwtToken);
+        const utilityData = await fetchUtilityData(jwtToken);
         if (utilityData.result) {
           setAppData({ jwtToken, utilityData });
         }

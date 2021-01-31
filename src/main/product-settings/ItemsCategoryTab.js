@@ -68,8 +68,8 @@ export default function ItemsCategoryTab() {
         const res = await createNewCategory(jwtToken, data);
         if (res.result) {
           renderAlertDialog(
-            CONSTANTS.HELPER_TEXT.INVALID_INPUT,
-            `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}\n Updating app data`
+            "Category created",
+            `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}`
           );
           const utilityData = await fetchUtilityData(jwtToken);
           if (utilityData.result) {

@@ -14,6 +14,7 @@ const httpOptions = {
     findAllVegitables: "/vegitables/findAll",
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
+    createNewDiscount: "/discount/create",
   },
 };
 
@@ -113,6 +114,19 @@ async function createNewCategory(authToken, data) {
   return newCategory.data;
 }
 
+async function createNewDiscount(authToken, data) {
+  const newDiscount = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewDiscount}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newDiscount.data;
+}
+
 export {
   signUp,
   authenticateUser,
@@ -122,4 +136,5 @@ export {
   getAllVegitables,
   createNewTax,
   createNewCategory,
+  createNewDiscount,
 };
