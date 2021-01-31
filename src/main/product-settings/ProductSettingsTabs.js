@@ -39,25 +39,10 @@ function a11yProps(index) {
 
 export default function ProductSettingsTabs(props) {
   const [value, setValue] = React.useState(0);
-  const [overrideDeliveryCharges, setOverrideDeliveryCharges] = useState(false);
-  const [
-    overrideDeliveryChargesLabel,
-    setOverrideDeliveryChargesLabel,
-  ] = useState("APPLIED");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  function handleDeliveryChargesOverride() {
-    setOverrideDeliveryCharges(!overrideDeliveryCharges);
-  }
-
-  useEffect(() => {
-    overrideDeliveryCharges
-      ? setOverrideDeliveryChargesLabel("APPLIED")
-      : setOverrideDeliveryChargesLabel("OVERRIDEN");
-  }, [overrideDeliveryCharges]);
 
   return (
     <div>
@@ -81,11 +66,7 @@ export default function ProductSettingsTabs(props) {
         <DiscountsTab />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <DeliveryChargesTab
-          overrideDeliveryChargesLabel={overrideDeliveryChargesLabel}
-          overrideDeliveryCharges={overrideDeliveryCharges}
-          handleDeliveryChargesOverride={handleDeliveryChargesOverride}
-        />
+        <DeliveryChargesTab />
       </TabPanel>
     </div>
   );

@@ -49,10 +49,16 @@ export default function ItemsCategoryTab() {
   const [okButtonAlertMessage, setOkButtonAlertMessage] = useState("");
   const [spinner, setSpinner] = useState(false);
 
+  function resetForm() {
+    setItemCategory("");
+    setItemSubCategory("");
+    setItemCategoryInfo("");
+  }
+
   function renderAlertDialog(dialogTitle, dialogMsg) {
-    setOkButtonAlert(true);
     setOkButtonAlertTitle(dialogTitle);
     setOkButtonAlertMessage(dialogMsg);
+    setOkButtonAlert(true);
   }
 
   async function handleCreateNewItemCategory() {
@@ -66,7 +72,7 @@ export default function ItemsCategoryTab() {
       } else {
         const data = { itemCategory, itemSubCategory, itemCategoryInfo };
         const res = await createNewCategory(jwtToken, data);
-        if (res.result) {
+        if (res.statusCode === 201) {
           renderAlertDialog(
             "Category created",
             `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}`
@@ -83,6 +89,7 @@ export default function ItemsCategoryTab() {
         }
       }
       setSpinner(false);
+      resetForm();
     } catch (err) {
       setSpinner(false);
       renderAlertDialog(CONSTANTS.HELPER_TEXT.ERROR, err);

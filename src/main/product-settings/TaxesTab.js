@@ -52,9 +52,9 @@ export default function TaxesTab() {
   const jwtToken = appData.jwtToken;
 
   function renderAlertDialog(dialogTitle, dialogMsg) {
-    setOkButtonAlert(true);
     setOkButtonAlertTitle(dialogTitle);
     setOkButtonAlertMessage(dialogMsg);
+    setOkButtonAlert(true);
   }
 
   function resetForm() {

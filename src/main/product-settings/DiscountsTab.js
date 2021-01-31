@@ -52,9 +52,9 @@ export default function DiscountsTab() {
   const [spinner, setSpinner] = useState(false);
 
   function renderAlertDialog(dialogTitle, dialogMsg) {
-    setOkButtonAlert(true);
     setOkButtonAlertTitle(dialogTitle);
     setOkButtonAlertMessage(dialogMsg);
+    setOkButtonAlert(true);
   }
 
   function handleDiscountActiveLabel() {
@@ -77,14 +77,14 @@ export default function DiscountsTab() {
       } else {
         const data = { discountName, discountPercentage, discountActive };
         const res = await createNewDiscount(jwtToken, data);
-        if (res.result) {
+        if (res.statusCode === 201) {
           resetForm();
           renderAlertDialog(
             "Discount created",
             `${res.result[0].discountName} created @ ${res.result[0].discountPercentage}% \n updating app data!`
           );
           const utilityData = await fetchUtilityData(jwtToken);
-          if (utilityData.result) {
+          if (utilityData.statusCode === 200) {
             setAppData({ jwtToken, utilityData });
           } else {
             renderAlertDialog(
