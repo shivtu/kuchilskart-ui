@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ViewAndEditVegitables({ vegitables }) {
+function ViewAndEditVegitables({ vegetables }) {
   const classes = useStyles();
 
   const tableHeader = [
@@ -39,16 +39,17 @@ function ViewAndEditVegitables({ vegitables }) {
 
   const [unknownError, setUnknownError] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [vegitableToEdit, setVegitableToEdit] = useState("");
+  const [vegetableToEdit, setVegitableToEdit] = useState("");
 
   function openEditMenu(subId) {
     try {
-      const rowToEdit = vegitables.find(
-        (vegitable) => vegitable.vegitableSubId === subId
+      const rowToEdit = vegetables.find(
+        (v) => v.vegitable.vegitableSubId === subId
       );
       setVegitableToEdit(rowToEdit);
       setOpen(true);
-    } catch {
+    } catch (err) {
+      console.error("Error: ", err);
       setUnknownError(!unknownError);
     }
   }
@@ -68,7 +69,7 @@ function ViewAndEditVegitables({ vegitables }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {vegitables.result.map((v, i) => (
+          {vegetables.map((v, i) => (
             <TableRow key={v.vegitableTableId}>
               <TableCell>{i + 1}</TableCell>
               <TableCell>{v.vegitable.vegitableName}</TableCell>
@@ -81,7 +82,9 @@ function ViewAndEditVegitables({ vegitables }) {
               <TableCell>{String(v.vegitable.vegitableAvailable)}</TableCell>
               <TableCell>
                 {
-                  <Button onClick={() => openEditMenu(v.vegitableSubId)}>
+                  <Button
+                    onClick={() => openEditMenu(v.vegitable.vegitableSubId)}
+                  >
                     <EditIcon />
                   </Button>
                 }
@@ -96,7 +99,7 @@ function ViewAndEditVegitables({ vegitables }) {
   return (
     <>
       {open && (
-        <EditVegitable setOpen={setOpen} vegitableToEdit={vegitableToEdit} />
+        <EditVegitable setOpen={setOpen} vegetableToEdit={vegetableToEdit} />
       )}
       {
         <Grid container spacing={1} alignItems="flex-end">

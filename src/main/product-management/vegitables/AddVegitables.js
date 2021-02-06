@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddVegitables({ findAllVegitables }) {
+function AddVegitables({ findAllVegetables }) {
   const { appData, setAppData } = useContext(AppContext);
 
   const itemCategories = getItemCategories(appData);
@@ -130,7 +130,7 @@ function AddVegitables({ findAllVegitables }) {
       setAlertDialogMessage(
         `${res.result[0].vegitable.vegitableName} created!`
       );
-      findAllVegitables(jwtToken);
+      findAllVegetables(jwtToken);
     } catch (err) {
       setOkButtonAlert(true);
       setAlertDialogMessage(err.message || "An unknown error occured");

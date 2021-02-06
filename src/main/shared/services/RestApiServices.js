@@ -11,7 +11,7 @@ const httpOptions = {
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
     createVegitable: "/vegitables/add",
-    findAllVegitables: "/vegitables/findAll",
+    findAllVegetables: "/vegitables/findAll",
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
     createNewDiscount: "/discount/create",
@@ -81,7 +81,7 @@ async function createNewVegitable(authToken, data) {
 async function getAllVegitables(authToken) {
   const allVegitables = await axios({
     method: "GET",
-    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegitables}`,
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegetables}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
     },

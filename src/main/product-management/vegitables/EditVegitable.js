@@ -40,34 +40,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EditVegitable({ setOpen, vegitableToEdit }) {
+function EditVegitable({ setOpen, vegetableToEdit }) {
   const classes = useStyles();
 
-  const [itemCategorySelected, setItemCategorySelected] = useState("");
+  console.log("vegetableToEdit", vegetableToEdit);
+
   const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
     true
   );
-  const [measurementUnit, setMeasurementUnit] = useState("");
-
-  const itemCategories = [
-    { name: "Vegitables", id: "edible_products_vegitables" },
-    { name: "Personal care", id: "edible_products_fruits" },
-    { name: "Dairy products", id: "edible_products_spices" },
-    { name: "Bakery", id: "edible_products_oil" },
-    { name: "Snaks", id: "edible_products_grains" },
-    { name: "Beverages", id: "edible_products_dal" },
-    { name: "Household cleaning", id: "fmcg_toiletaries" },
-  ];
-
-  function handleMeasurementUnitSelect(event) {
-    setMeasurementUnit(event.target.value);
-  }
 
   function handleisExistingDiscountApplied() {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
   }
-
-  function handleExpiryDate(event) {}
 
   function renderFirstRow() {
     return (
@@ -83,7 +67,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableToEdit.vegitableName}
+            value={vegetableToEdit.vegitable.vegitableName}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -96,7 +80,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableToEdit.vegitableVariant}
+            value={vegetableToEdit.vegitable.vegitableVariant}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -112,7 +96,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             fullWidth
             variant="outlined"
             size="small"
-            onChange={handleExpiryDate}
+            onChange={(_e) => console.log(">>>>>>>", _e.target.value)}
           />
           <FormHelperText>
             Expiry date must always be a future date
@@ -136,7 +120,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             label="Description of the Fruit/Vegitable"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.vegitableDescp}
+            value={vegetableToEdit.vegitable.vegitableDescp}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -166,7 +150,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             size="small"
             label="Product category name"
             variant="outlined"
-            value={vegitableToEdit.itemCategory}
+            value={vegetableToEdit.vegitable.itemCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -180,7 +164,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             label="Product sub category"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.itemSubCategory}
+            value={vegetableToEdit.vegitable.itemSubCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -205,7 +189,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             label="Measurement unit"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.vegitableMeasureMentUnit}
+            value={vegetableToEdit.vegitable.vegitableMeasureMentUnit}
             disabled
           />
           <FormHelperText className={classes.cautionText}>

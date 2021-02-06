@@ -13,7 +13,7 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
-  const [vegitables, setVegitables] = useState("");
+  const [vegetables, setVegetables] = useState("");
   const [spinner, setSpinner] = useState(true);
   const [currentRadioOption, setCurrentRadioOption] = useState(
     CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
@@ -25,12 +25,12 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
     },
   };
 
-  async function findAllVegitables() {
+  async function findAllVegetables() {
     try {
       setSpinner(true);
       const res = await getAllVegitables(jwtToken);
       if (res.result) {
-        setVegitables(res);
+        setVegetables(res);
         setCurrentRadioOption(
           CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
         );
@@ -43,7 +43,7 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   }
 
   useEffect(() => {
-    findAllVegitables();
+    findAllVegetables();
   }, []);
 
   return (
@@ -62,9 +62,9 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
           </Grid>
           {currentRadioOption ===
           CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
-            <AddVegitables findAllVegitables={findAllVegitables} />
+            <AddVegitables findAllVegetables={findAllVegetables} />
           ) : (
-            <ViewAndEditVegitables vegitables={vegitables} />
+            <ViewAndEditVegitables vegetables={vegetables.result} />
           )}
         </Grid>
       )}
