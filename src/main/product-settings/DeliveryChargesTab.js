@@ -87,7 +87,7 @@ export default function DeliveryChargesTab() {
         if (res.statusCode === 201) {
           renderAlertDialog(
             "New Delivery charge rule created",
-            `Sales amount between ${salesAmountLessThan} and ${salesAmountLessThan} will be charged delivery @ ${deliveryCharge} INR`
+            `Sales amount between ${salesAmountGreaterThan} and ${salesAmountLessThan} will be charged delivery @ ${deliveryCharge} INR`
           );
           const utilityData = await fetchUtilityData(jwtToken);
           if (utilityData.statusCode === 200) {
