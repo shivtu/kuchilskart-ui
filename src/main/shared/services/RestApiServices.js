@@ -10,7 +10,7 @@ const httpOptions = {
     signUp: "/signup",
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
-    createVegitable: "/vegitables/add",
+    createVegetable: "/vegitables/add",
     findAllVegetables: "/vegitables/findAll",
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
@@ -65,28 +65,28 @@ async function fetchUtilityData(authToken) {
   return utilityData.data;
 }
 
-async function createNewVegitable(authToken, data) {
-  const newVegitable = await axios({
+async function createNewVegetable(authToken, data) {
+  const newVegetable = await axios({
     method: "post",
-    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createVegitable}`,
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createVegetable}`,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${authToken}`,
     },
   });
-  return newVegitable.data;
+  return newVegetable.data;
 }
 
-async function getAllVegitables(authToken) {
-  const allVegitables = await axios({
+async function getAllVegetables(authToken) {
+  const allVegetables = await axios({
     method: "GET",
     url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegetables}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
   });
-  return allVegitables.data;
+  return allVegetables.data;
 }
 
 async function createNewTax(authToken, data) {
@@ -146,8 +146,8 @@ export {
   authenticateUser,
   fetchUtilityData,
   welcomeMsg,
-  createNewVegitable,
-  getAllVegitables,
+  createNewVegetable,
+  getAllVegetables,
   createNewTax,
   createNewCategory,
   createNewDiscount,

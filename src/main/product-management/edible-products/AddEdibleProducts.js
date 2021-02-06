@@ -47,7 +47,7 @@ function AddEdibleProducts() {
   const { appData, setAppData } = useContext(AppContext);
 
   const itemCategories = [
-    { name: "Vegitables", id: "edible_products_vegitables" },
+    { name: "Vegetables", id: "edible_products_vegetables" },
     { name: "Personal care", id: "edible_products_fruits" },
     { name: "Dairy products", id: "edible_products_spices" },
     { name: "Bakery", id: "edible_products_oil" },

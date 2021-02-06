@@ -3,13 +3,13 @@ import { Grid, Typography } from "@material-ui/core";
 
 import CONSTANTS from "../../shared/Constants";
 import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
-import AddVegitables from "../vegitables/AddVegitables";
-import ViewAndEditVegitables from "./ViewAndEditVegitables";
+import AddVegetables from "./AddVegetables";
+import ViewAndEditVegetables from "./ViewAndEditVegetables";
 import Spinner from "../../shared/common/Spinner";
 import { AppContext } from "../../Home";
-import { getAllVegitables } from "../../shared/services/RestApiServices";
+import { getAllVegetables } from "../../shared/services/RestApiServices";
 
-function Vegitables({ vegitableTable, updateVegitableTable }) {
+function Vegetables({ vegetableTable, updateVegetableTable }) {
   const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
@@ -28,7 +28,7 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   async function findAllVegetables() {
     try {
       setSpinner(true);
-      const res = await getAllVegitables(jwtToken);
+      const res = await getAllVegetables(jwtToken);
       if (res.result) {
         setVegetables(res);
         setCurrentRadioOption(
@@ -56,15 +56,15 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
         <Grid container direction="column">
           <Grid container justify="center" alignItems="center">
             <Typography variant="h6" style={styles.pageTitle}>
-              {CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
+              {CONSTANTS.PRODUCT_MANAGEMENT.VEGETABLES.TAB_NAME}
             </Typography>
             <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
           </Grid>
           {currentRadioOption ===
           CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
-            <AddVegitables findAllVegetables={findAllVegetables} />
+            <AddVegetables findAllVegetables={findAllVegetables} />
           ) : (
-            <ViewAndEditVegitables vegetables={vegetables.result} />
+            <ViewAndEditVegetables vegetables={vegetables.result} />
           )}
         </Grid>
       )}
@@ -72,4 +72,4 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   );
 }
 
-export default Vegitables;
+export default Vegetables;

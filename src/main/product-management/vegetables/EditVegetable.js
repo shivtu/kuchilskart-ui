@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EditVegitable({ setOpen, vegetableToEdit }) {
+function EditVegetable({ setOpen, vegetableToEdit }) {
   const classes = useStyles();
 
   console.log("vegetableToEdit", vegetableToEdit);
@@ -63,7 +63,7 @@ function EditVegitable({ setOpen, vegetableToEdit }) {
       >
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit name"
+            label="Vegetable/Fruit name"
             variant="outlined"
             size="small"
             fullWidth
@@ -76,7 +76,7 @@ function EditVegitable({ setOpen, vegetableToEdit }) {
         </Grid>
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit variant"
+            label="Vegetable/Fruit variant"
             variant="outlined"
             size="small"
             fullWidth
@@ -117,7 +117,7 @@ function EditVegitable({ setOpen, vegetableToEdit }) {
         <Grid item className={classes.formComponent}>
           <TextField
             fullWidth
-            label="Description of the Fruit/Vegitable"
+            label="Description of the Fruit/Vegetable"
             variant="outlined"
             size="small"
             value={vegetableToEdit.vegitable.vegitableDescp}
@@ -376,7 +376,7 @@ function EditVegitable({ setOpen, vegetableToEdit }) {
         <Grid item>
           <Typography className={classes.formComponent} variant="body1">
             Some of the fields that are disabled cannot be edited, if you need
-            new values for those fields create a new vegitable/fruit
+            new values for those fields create a new vegetable/fruit
           </Typography>
         </Grid>
       </Grid>
@@ -412,4 +412,4 @@ function EditVegitable({ setOpen, vegetableToEdit }) {
   );
 }
 
-export default EditVegitable;
+export default EditVegetable;

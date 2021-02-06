@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import UnknownError from "../../shared/common/errors/UnknownError";
-import EditVegitable from "./EditVegitable";
+import EditVegetable from "./EditVegetable";
 
 const useStyles = makeStyles((theme) => ({
   searchInput: {
@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ViewAndEditVegitables({ vegetables }) {
+function ViewAndEditVegetables({ vegetables }) {
   const classes = useStyles();
 
   const tableHeader = [
     "#",
-    "Vegitable/Fruit name",
+    "Vegetable/Fruit name",
     "Variant",
     "Quantity",
     "Selling price",
@@ -39,14 +39,14 @@ function ViewAndEditVegitables({ vegetables }) {
 
   const [unknownError, setUnknownError] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [vegetableToEdit, setVegitableToEdit] = useState("");
+  const [vegetableToEdit, setVegetableToEdit] = useState("");
 
   function openEditMenu(subId) {
     try {
       const rowToEdit = vegetables.find(
         (v) => v.vegitable.vegitableSubId === subId
       );
-      setVegitableToEdit(rowToEdit);
+      setVegetableToEdit(rowToEdit);
       setOpen(true);
     } catch (err) {
       console.error("Error: ", err);
@@ -99,7 +99,7 @@ function ViewAndEditVegitables({ vegetables }) {
   return (
     <>
       {open && (
-        <EditVegitable setOpen={setOpen} vegetableToEdit={vegetableToEdit} />
+        <EditVegetable setOpen={setOpen} vegetableToEdit={vegetableToEdit} />
       )}
       {
         <Grid container spacing={1} alignItems="flex-end">
@@ -110,7 +110,7 @@ function ViewAndEditVegitables({ vegetables }) {
             <TextField
               className={classes.searchInput}
               id="input-with-icon-grid"
-              label="Search by vegitable/fruit name"
+              label="Search by vegetable/fruit name"
               onChange={handleTableSearch}
             />
           </Grid>
@@ -122,4 +122,4 @@ function ViewAndEditVegitables({ vegetables }) {
   );
 }
 
-export default ViewAndEditVegitables;
+export default ViewAndEditVegetables;
