@@ -67,7 +67,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             variant="outlined"
             size="small"
             fullWidth
-            value={vegetableToEdit.vegitable.vegitableName}
+            value={vegetableToEdit.vegetable.vegetableName}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -80,7 +80,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             variant="outlined"
             size="small"
             fullWidth
-            value={vegetableToEdit.vegitable.vegitableVariant}
+            value={vegetableToEdit.vegetable.vegetableVariant}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -120,7 +120,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             label="Description of the Fruit/Vegetable"
             variant="outlined"
             size="small"
-            value={vegetableToEdit.vegitable.vegitableDescp}
+            value={vegetableToEdit.vegetable.vegetableDescp}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -150,7 +150,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             size="small"
             label="Product category name"
             variant="outlined"
-            value={vegetableToEdit.vegitable.itemCategory}
+            value={vegetableToEdit.vegetable.itemCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -164,7 +164,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             label="Product sub category"
             variant="outlined"
             size="small"
-            value={vegetableToEdit.vegitable.itemSubCategory}
+            value={vegetableToEdit.vegetable.itemSubCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -189,7 +189,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             label="Measurement unit"
             variant="outlined"
             size="small"
-            value={vegetableToEdit.vegitable.vegitableMeasureMentUnit}
+            value={vegetableToEdit.vegetable.vegetableMeasureMentUnit}
             disabled
           />
           <FormHelperText className={classes.cautionText}>

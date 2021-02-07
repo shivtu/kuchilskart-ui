@@ -104,20 +104,20 @@ function AddVegetables({ findAllVegetables }) {
   async function handleSave() {
     try {
       const data = new FormData();
-      data.append("vegitableName", vegetableName);
-      data.append("vegitableVariant", vegetableVariant);
-      data.append("vegitableDescp", vegetableDescp);
-      data.append("vegitableApplicableTaxes", taxName);
-      data.append("vegitableSellingPrice", sellingPrice);
-      data.append("vegitableOfferedDiscount", discountPercentage);
-      data.append("vegitableShowDiscount", showDiscount);
-      data.append("vegitableQuantity", vegetableQuantity);
-      data.append("vegitableAvailable", "true");
-      data.append("vegitableMeasureMentUnit", measurementUnit);
-      data.append("vegitableInventoryCostPrice", costPrice);
-      data.append("vegitableInventoryExpiry", vegetablesInventoryExpiry);
-      data.append("vegitableInventoryFixedCost", vegetableInventoryFixedCost);
-      data.append("vegitableOfferedDiscountName", discountNameSelected);
+      data.append("vegetableName", vegetableName);
+      data.append("vegetableVariant", vegetableVariant);
+      data.append("vegetableDescp", vegetableDescp);
+      data.append("vegetableApplicableTaxes", taxName);
+      data.append("vegetableSellingPrice", sellingPrice);
+      data.append("vegetableOfferedDiscount", discountPercentage);
+      data.append("vegetableShowDiscount", showDiscount);
+      data.append("vegetableQuantity", vegetableQuantity);
+      data.append("vegetableAvailable", "true");
+      data.append("vegetableMeasureMentUnit", measurementUnit);
+      data.append("vegetableInventoryCostPrice", costPrice);
+      data.append("vegetableInventoryExpiry", vegetablesInventoryExpiry);
+      data.append("vegetableInventoryFixedCost", vegetableInventoryFixedCost);
+      data.append("vegetableOfferedDiscountName", discountNameSelected);
       data.append("itemCategory", itemCategorySelected.itemCategory);
       data.append("itemSubCategory", itemSubCategorySelected.itemSubCategory);
       const res = await createNewVegetable(jwtToken, data);
@@ -128,7 +128,7 @@ function AddVegetables({ findAllVegetables }) {
       }
       setOkButtonAlert(true);
       setAlertDialogMessage(
-        `${res.result[0].vegitable.vegitableName} created!`
+        `${res.result[0].vegetable.vegetableName} created!`
       );
       findAllVegetables(jwtToken);
     } catch (err) {

@@ -44,7 +44,7 @@ function ViewAndEditVegetables({ vegetables }) {
   function openEditMenu(subId) {
     try {
       const rowToEdit = vegetables.find(
-        (v) => v.vegitable.vegitableSubId === subId
+        (v) => v.vegetable.vegetableSubId === subId
       );
       setVegetableToEdit(rowToEdit);
       setOpen(true);
@@ -70,20 +70,20 @@ function ViewAndEditVegetables({ vegetables }) {
         </TableHead>
         <TableBody>
           {vegetables.map((v, i) => (
-            <TableRow key={v.vegitableTableId}>
+            <TableRow key={v.vegetableTableId}>
               <TableCell>{i + 1}</TableCell>
-              <TableCell>{v.vegitable.vegitableName}</TableCell>
-              <TableCell>{v.vegitable.vegitableVariant}</TableCell>
-              <TableCell>{v.vegitable.vegitableQuantity}</TableCell>
-              <TableCell>{v.vegitable.vegitableSellingPrice}</TableCell>
-              <TableCell>{v.vegitable.vegitableOfferedDiscountName}</TableCell>
-              <TableCell>{v.vegitable.vegitableDiscountedPrice}</TableCell>
-              <TableCell>{v.vegitable.vegitableTaxedPrice}</TableCell>
-              <TableCell>{String(v.vegitable.vegitableAvailable)}</TableCell>
+              <TableCell>{v.vegetable.vegetableName}</TableCell>
+              <TableCell>{v.vegetable.vegetableVariant}</TableCell>
+              <TableCell>{v.vegetable.vegetableQuantity}</TableCell>
+              <TableCell>{v.vegetable.vegetableSellingPrice}</TableCell>
+              <TableCell>{v.vegetable.vegetableOfferedDiscountName}</TableCell>
+              <TableCell>{v.vegetable.vegetableDiscountedPrice}</TableCell>
+              <TableCell>{v.vegetable.vegetableTaxedPrice}</TableCell>
+              <TableCell>{String(v.vegetable.vegetableAvailable)}</TableCell>
               <TableCell>
                 {
                   <Button
-                    onClick={() => openEditMenu(v.vegitable.vegitableSubId)}
+                    onClick={() => openEditMenu(v.vegetable.vegetableSubId)}
                   >
                     <EditIcon />
                   </Button>
