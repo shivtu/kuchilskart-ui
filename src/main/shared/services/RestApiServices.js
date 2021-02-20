@@ -15,7 +15,8 @@ const httpOptions = {
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
     createNewDiscount: "/discount/create",
-    createNewDeliveryCharge: "/deliveryCharges/createConstraint",
+    createNewDeliveryCharge: "/deliveryUtility/createConstraint",
+    addNewDeliveryLocation: "/deliveryUtility/addNewDeliveryLocation",
   },
 };
 
@@ -141,6 +142,19 @@ async function createNewDeliveryCharge(authToken, data) {
   return newDeliveryCharge.data;
 }
 
+async function createNewDeliveryLocation(authToken, data) {
+  const newDeliveryLocation = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.addNewDeliveryLocation}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newDeliveryLocation.data;
+}
+
 export {
   signUp,
   authenticateUser,
@@ -152,4 +166,5 @@ export {
   createNewCategory,
   createNewDiscount,
   createNewDeliveryCharge,
+  createNewDeliveryLocation,
 };

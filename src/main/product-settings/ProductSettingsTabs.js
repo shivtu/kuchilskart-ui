@@ -5,6 +5,7 @@ import TaxesTab from "./TaxesTab";
 import DiscountsTab from "./DiscountsTab";
 import ItemsCategoryTab from "./ItemsCategoryTab";
 import DeliveryChargesTab from "./DeliveryChargesTab";
+import DeliveryLocations from "./DeliveryLocations";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,6 +56,7 @@ export default function ProductSettingsTabs(props) {
         <Tab label="Item Categories" {...a11yProps(1)} />
         <Tab label="Discounts" {...a11yProps(2)} />
         <Tab label="Delivery charges" {...a11yProps(3)} />
+        <Tab label="Delivery locations" {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <TaxesTab />
@@ -67,6 +69,9 @@ export default function ProductSettingsTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <DeliveryChargesTab />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <DeliveryLocations />
       </TabPanel>
     </div>
   );
