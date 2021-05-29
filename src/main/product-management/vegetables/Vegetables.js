@@ -46,30 +46,49 @@ function Vegetables() {
     findAllVegetables();
   }, []);
 
-  return (
-    <>
-      {spinner ? (
+  const renderCurrentRadioOptions = () => (
+    <Grid container justify="center" alignItems="center">
+      <Typography variant="h6" style={styles.pageTitle}>
+        {CONSTANTS.PRODUCT_MANAGEMENT.VEGETABLES.TAB_NAME}
+      </Typography>
+      <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
+    </Grid>
+  );
+
+  const renderVegetables = () => {
+    if (spinner) {
+      return (
         <Grid container justify="center" alignItems="center">
           <Spinner size={100} />
         </Grid>
-      ) : (
-        <Grid container direction="column">
-          <Grid container justify="center" alignItems="center">
-            <Typography variant="h6" style={styles.pageTitle}>
-              {CONSTANTS.PRODUCT_MANAGEMENT.VEGETABLES.TAB_NAME}
-            </Typography>
-            <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
-          </Grid>
-          {currentRadioOption ===
-          CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
-            <AddVegetables findAllVegetables={findAllVegetables} />
-          ) : (
-            <ViewAndEditVegetables vegetables={vegetables} />
-          )}
-        </Grid>
-      )}
-    </>
-  );
+      );
+    }
+
+    if (
+      currentRadioOption ===
+      CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
+    ) {
+      return (
+        <>
+          {renderCurrentRadioOptions()}
+          <ViewAndEditVegetables vegetables={vegetables} />
+        </>
+      );
+    }
+
+    if (currentRadioOption === CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD) {
+      return (
+        <>
+          {renderCurrentRadioOptions()}
+          <AddVegetables findAllVegetables={findAllVegetables} />
+        </>
+      );
+    }
+
+    return <>Error fallback</>;
+  };
+
+  return renderVegetables();
 }
 
 export default Vegetables;

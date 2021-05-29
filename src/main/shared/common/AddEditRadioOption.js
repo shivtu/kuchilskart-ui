@@ -12,15 +12,15 @@ function AddEditRadioOption({ setCurrentRadioOption }) {
   const [viewAndEditOption, setViewAndEditOption] = useState(true);
 
   function handleAddOption() {
+    setCurrentRadioOption(CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD);
     setAddOption(true);
     setViewAndEditOption(false);
-    setCurrentRadioOption(CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD);
   }
 
   function handleViewAnddEditOption() {
-    setViewAndEditOption(true);
+    setCurrentRadioOption(CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT);
     setAddOption(false);
-    setCurrentRadioOption("ViewAndEdit");
+    setViewAndEditOption(true);
   }
 
   // TODO: move strings to constants

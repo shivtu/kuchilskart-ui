@@ -308,9 +308,7 @@ function AddVegetables({ findAllVegetables }) {
             className={classes.formComponent}
             size="small"
           >
-            <InputLabel id="demo-simple-select-outlined-label">
-              Measurement unit
-            </InputLabel>
+            <InputLabel>Measurement unit</InputLabel>
             <Select
               value={measurementUnit}
               onChange={(_e) => setMeasurementUnit(_e.target.value)}
