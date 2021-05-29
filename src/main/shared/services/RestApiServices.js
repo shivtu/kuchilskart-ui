@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const httpOptions = {
-  // host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
-  host: "http://192.168.0.107:5000",
+  host: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com",
+  // host: "http://192.168.0.107:5000",
   uri: "/api/v1",
   role: { retailer: "/retailer", users: "/users" },
   route: {
@@ -10,8 +10,8 @@ const httpOptions = {
     signUp: "/signup",
     authenticate: "/authenticate",
     findAllUtilties: "/utility/find/allUtilities",
-    createVegitable: "/vegitables/add",
-    findAllVegitables: "/vegitables/findAll",
+    createVegetable: "/vegetables/add",
+    findAllVegetables: "/vegetables/findAll",
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
   },
@@ -20,8 +20,7 @@ const httpOptions = {
 async function welcomeMsg() {
   const welcomeMessage = await axios({
     method: "GET",
-    url:
-      "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com/api/v1/users/welcome",
+    url: "http://kucchils-kart-test.ap-south-1.elasticbeanstalk.com/api/v1/users/welcome",
   });
   return welcomeMessage.data;
 }
@@ -58,33 +57,35 @@ async function fetchUtilityData(authToken) {
     url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllUtilties}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
+      "Access-Control-Allow-Origin": "*",
     },
   });
+  console.log(`utilityData`, utilityData);
   return utilityData.data;
 }
 
-async function createNewVegitable(authToken, data) {
-  const newVegitable = await axios({
+async function createNewVegetable(authToken, data) {
+  const newVegetable = await axios({
     method: "post",
-    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createVegitable}`,
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createVegetable}`,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${authToken}`,
     },
   });
-  return newVegitable.data;
+  return newVegetable.data;
 }
 
-async function getAllVegitables(authToken) {
-  const allVegitables = await axios({
+async function getAllVegetables(authToken) {
+  const allVegetables = await axios({
     method: "GET",
-    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegitables}`,
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegetables}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
   });
-  return allVegitables.data;
+  return allVegetables.data;
 }
 
 async function createNewTax(authToken, data) {
@@ -118,8 +119,8 @@ export {
   authenticateUser,
   fetchUtilityData,
   welcomeMsg,
-  createNewVegitable,
-  getAllVegitables,
+  createNewVegetable,
+  getAllVegetables,
   createNewTax,
   createNewCategory,
 };

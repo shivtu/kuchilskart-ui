@@ -47,18 +47,18 @@ function utilityData() {
         itemCategories: [
           {
             itemCategoryTableId: 1,
-            itemCategory: "Fruits & Vegitables",
-            itemSubCategory: "Vegitables",
-            itemCategorySubId: "fruits & vegitables-vegitables",
+            itemCategory: "Fruits & Vegetables",
+            itemSubCategory: "Vegetables",
+            itemCategorySubId: "fruits & vegetables-vegetables",
             itemCategoryInfo: "Fruits only",
             itemCategoryLastUpdatedBy: "shibendutta@gmail.com",
             itemCategoryLastUpdatedOn: "2021-01-01T03:51:39.752742",
           },
           {
             itemCategoryTableId: 3,
-            itemCategory: "Fruits & Vegitables",
+            itemCategory: "Fruits & Vegetables",
             itemSubCategory: "Fruits",
-            itemCategorySubId: "fruits & vegitables-fruits",
+            itemCategorySubId: "fruits & vegetables-fruits",
             itemCategoryInfo: "Fruits only",
             itemCategoryLastUpdatedBy: "shibendutta@gmail.com",
             itemCategoryLastUpdatedOn: "2021-01-01T04:39:04.624283",

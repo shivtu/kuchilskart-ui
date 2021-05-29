@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Typography, Tab, Tabs } from "@material-ui/core";
 import CONSTANTS from "../shared/Constants";
-import Vegitables from "./vegitables/Vegitables";
+import Vegetables from "./vegetables/Vegetables";
 import EdibleProducts from "./edible-products/EdibleProducts";
 import FMCGProducts from "./fmcg-products/FMCGProducts";
 import NonVegItems from "./non-veg-products/NonVegItems";
@@ -53,7 +53,7 @@ export default function ProductManagement() {
         aria-label="product settings tabs"
       >
         <Tab
-          label={CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
+          label={CONSTANTS.PRODUCT_MANAGEMENT.VEGETABLES.TAB_NAME}
           {...a11yProps(0)}
         />
         <Tab
@@ -70,7 +70,7 @@ export default function ProductManagement() {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Vegitables />
+        <Vegetables />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <EdibleProducts />

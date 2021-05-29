@@ -40,17 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EditVegitable({ setOpen, vegitableToEdit }) {
+function EditVegetable({ setOpen, vegetableToEdit }) {
   const classes = useStyles();
 
   const [itemCategorySelected, setItemCategorySelected] = useState("");
-  const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
-    true
-  );
+  const [isExistingDiscountApplied, setIsExistingDiscountApplied] =
+    useState(true);
   const [measurementUnit, setMeasurementUnit] = useState("");
 
   const itemCategories = [
-    { name: "Vegitables", id: "edible_products_vegitables" },
+    { name: "Vegetables", id: "edible_products_vegetables" },
     { name: "Personal care", id: "edible_products_fruits" },
     { name: "Dairy products", id: "edible_products_spices" },
     { name: "Bakery", id: "edible_products_oil" },
@@ -79,11 +78,11 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
       >
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit name"
+            label="Vegetable/Fruit name"
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableToEdit.vegitableName}
+            value={vegetableToEdit.vegetableName}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -92,11 +91,11 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
         </Grid>
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit variant"
+            label="Vegetable/Fruit variant"
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableToEdit.vegitableVariant}
+            value={vegetableToEdit.vegetableVariant}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -133,10 +132,10 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
         <Grid item className={classes.formComponent}>
           <TextField
             fullWidth
-            label="Description of the Fruit/Vegitable"
+            label="Description of the Fruit/Vegetable"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.vegitableDescp}
+            value={vegetableToEdit.vegetableDescp}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -166,7 +165,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             size="small"
             label="Product category name"
             variant="outlined"
-            value={vegitableToEdit.itemCategory}
+            value={vegetableToEdit.itemCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -180,7 +179,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             label="Product sub category"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.itemSubCategory}
+            value={vegetableToEdit.itemSubCategory}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -205,7 +204,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
             label="Measurement unit"
             variant="outlined"
             size="small"
-            value={vegitableToEdit.vegitableMeasureMentUnit}
+            value={vegetableToEdit.vegetableMeasureMentUnit}
             disabled
           />
           <FormHelperText className={classes.cautionText}>
@@ -392,7 +391,7 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
         <Grid item>
           <Typography className={classes.formComponent} variant="body1">
             Some of the fields that are disabled cannot be edited, if you need
-            new values for those fields create a new vegitable/fruit
+            new values for those fields create a new vegetable/fruit
           </Typography>
         </Grid>
       </Grid>
@@ -428,4 +427,4 @@ function EditVegitable({ setOpen, vegitableToEdit }) {
   );
 }
 
-export default EditVegitable;
+export default EditVegetable;

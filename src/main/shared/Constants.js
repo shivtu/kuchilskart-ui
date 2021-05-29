@@ -30,7 +30,7 @@ const CONSTANTS = {
     },
   },
   PRODUCT_MANAGEMENT: {
-    VEGITABLES: {
+    VEGETABLES: {
       TAB_NAME: "Fruits & Vagitables",
     },
     EDIBLE_PRODUCTS: {
@@ -40,7 +40,7 @@ const CONSTANTS = {
       TAB_NAME: "FMCG products",
     },
     NON_VEGETARIAN_ITEMS: {
-      TAB_NAME: "Non vegitarian items",
+      TAB_NAME: "Non vegetarian items",
     },
     RADIO_OPTIONS: {
       ADD: "Add",

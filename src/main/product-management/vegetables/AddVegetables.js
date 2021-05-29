@@ -17,10 +17,10 @@ import { blue } from "@material-ui/core/colors";
 import { Autocomplete } from "@material-ui/lab";
 import { AppContext } from "../../Home";
 import CONSTANTS from "../../shared/Constants";
-import { createNewVegitable } from "../../shared/services/RestApiServices";
+import { createNewVegetable } from "../../shared/services/RestApiServices";
 import OkButtonDialog from "../../shared/common/OkButtonDialog";
 
-import { getItemCategories } from "./VegitableUtils";
+import { getItemCategories } from "./VegetableUtils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddVegitables({ findAllVegitables }) {
+function AddVegetables({ findAllVegetables }) {
   const appData = useContext(AppContext);
 
   const itemCategories = getItemCategories(appData);
@@ -60,26 +60,22 @@ function AddVegitables({ findAllVegitables }) {
 
   const classes = useStyles();
 
-  const [vegitableName, setVegitableName] = useState("");
-  const [vegitableVariant, setVegitableVariant] = useState("");
-  const [vegitablesInventoryExpiry, setVegitablesInventoryExpiry] = useState(
-    "2021-05-24"
-  );
-  const [vegitableDescp, setVegitableDescp] = useState("");
+  const [vegetableName, setVegetableName] = useState("");
+  const [vegetableVariant, setVegetableVariant] = useState("");
+  const [vegetablesInventoryExpiry, setVegetablesInventoryExpiry] =
+    useState("2021-05-24");
+  const [vegetableDescp, setVegetableDescp] = useState("");
   const [itemCategorySelected, setItemCategorySelected] = useState([]);
   const [itemSubCategories, setItemSubCategories] = useState([]);
   const [itemSubCategorySelected, setItemSubCategorySelected] = useState([]);
-  const [vegitableQuantity, setVegitableQuantity] = useState(0);
+  const [vegetableQuantity, setVegetableQuantity] = useState(0);
   const [measurementUnit, setMeasurementUnit] = useState("");
   const [costPrice, setCostPrice] = useState(0);
-  const [
-    vegitableInventoryFixedCost,
-    setVegitableInventoryFixedCost,
-  ] = useState(0);
+  const [vegetableInventoryFixedCost, setVegetableInventoryFixedCost] =
+    useState(0);
   const [sellingPrice, setSellingPrice] = useState(0);
-  const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
-    true
-  );
+  const [isExistingDiscountApplied, setIsExistingDiscountApplied] =
+    useState(true);
   const [discountNameSelected, setDiscountNameSelected] = useState("");
   const [showDiscount, setShowDiscount] = useState(true);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -90,13 +86,13 @@ function AddVegitables({ findAllVegitables }) {
 
   function shouldDisableSave() {
     return Boolean(
-      vegitableName &&
-        vegitableVariant &&
-        vegitableDescp &&
-        vegitableQuantity &&
+      vegetableName &&
+        vegetableVariant &&
+        vegetableDescp &&
+        vegetableQuantity &&
         itemCategorySelected &&
         itemSubCategorySelected &&
-        vegitableQuantity &&
+        vegetableQuantity &&
         measurementUnit
     );
   }
@@ -104,23 +100,23 @@ function AddVegitables({ findAllVegitables }) {
   async function handleSave() {
     try {
       const data = new FormData();
-      data.append("vegitableName", vegitableName);
-      data.append("vegitableVariant", vegitableVariant);
-      data.append("vegitableDescp", vegitableDescp);
-      data.append("vegitableApplicableTaxes", taxName);
-      data.append("vegitableSellingPrice", sellingPrice);
-      data.append("vegitableOfferedDiscount", discountPercentage);
-      data.append("vegitableShowDiscount", showDiscount);
-      data.append("vegitableQuantity", vegitableQuantity);
-      data.append("vegitableAvailable", "true");
-      data.append("vegitableMeasureMentUnit", measurementUnit);
-      data.append("vegitableInventoryCostPrice", costPrice);
-      data.append("vegitableInventoryExpiry", vegitablesInventoryExpiry);
-      data.append("vegitableInventoryFixedCost", vegitableInventoryFixedCost);
-      data.append("vegitableOfferedDiscountName", discountNameSelected);
+      data.append("vegetableName", vegetableName);
+      data.append("vegetableVariant", vegetableVariant);
+      data.append("vegetableDescp", vegetableDescp);
+      data.append("vegetableApplicableTaxes", taxName);
+      data.append("vegetableSellingPrice", sellingPrice);
+      data.append("vegetableOfferedDiscount", discountPercentage);
+      data.append("vegetableShowDiscount", showDiscount);
+      data.append("vegetableQuantity", vegetableQuantity);
+      data.append("vegetableAvailable", "true");
+      data.append("vegetableMeasureMentUnit", measurementUnit);
+      data.append("vegetableInventoryCostPrice", costPrice);
+      data.append("vegetableInventoryExpiry", vegetablesInventoryExpiry);
+      data.append("vegetableInventoryFixedCost", vegetableInventoryFixedCost);
+      data.append("vegetableOfferedDiscountName", discountNameSelected);
       data.append("itemCategory", itemCategorySelected.itemCategory);
       data.append("itemSubCategory", itemSubCategorySelected.itemSubCategory);
-      const res = await createNewVegitable(jwtToken, data);
+      const res = await createNewVegetable(jwtToken, data);
       if (res.statusCode !== 201) {
         setOkButtonAlert(true);
         setAlertDialogMessage(res.statusMessage || "An unknown error occured");
@@ -128,9 +124,9 @@ function AddVegitables({ findAllVegitables }) {
       }
       setOkButtonAlert(true);
       setAlertDialogMessage(
-        `${res.result[0].vegitable.vegitableName} created!`
+        `${res.result[0].vegetable.vegetableName} created!`
       );
-      findAllVegitables(jwtToken);
+      findAllVegetables(jwtToken);
     } catch (err) {
       setOkButtonAlert(true);
       setAlertDialogMessage(err.message || "An unknown error occured");
@@ -147,12 +143,12 @@ function AddVegitables({ findAllVegitables }) {
       >
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit name"
+            label="Vegetable/Fruit name"
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableName}
-            onChange={(_e) => setVegitableName(_e.target.value)}
+            value={vegetableName}
+            onChange={(_e) => setVegetableName(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -160,12 +156,12 @@ function AddVegitables({ findAllVegitables }) {
         </Grid>
         <Grid item className={classes.threeInARow}>
           <TextField
-            label="Vegitable/Fruit variant"
+            label="Vegetable/Fruit variant"
             variant="outlined"
             size="small"
             fullWidth
-            value={vegitableVariant}
-            onChange={(_e) => setVegitableVariant(_e.target.value)}
+            value={vegetableVariant}
+            onChange={(_e) => setVegetableVariant(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -175,12 +171,12 @@ function AddVegitables({ findAllVegitables }) {
           <TextField
             label="Expiry date"
             type="date"
-            value={vegitablesInventoryExpiry}
+            value={vegetablesInventoryExpiry}
             className={classes.textField}
             fullWidth
             variant="outlined"
             size="small"
-            onChange={(_e) => setVegitablesInventoryExpiry(_e.target.value)}
+            onChange={(_e) => setVegetablesInventoryExpiry(_e.target.value)}
           />
           <FormHelperText>
             Expiry date must always be a future date
@@ -201,11 +197,11 @@ function AddVegitables({ findAllVegitables }) {
         <Grid item className={classes.formComponent}>
           <TextField
             fullWidth
-            label="Description of the Fruit/Vegitable"
+            label="Description of the Fruit/Vegetable"
             variant="outlined"
             size="small"
-            value={vegitableDescp}
-            onChange={(_e) => setVegitableDescp(_e.target.value)}
+            value={vegetableDescp}
+            onChange={(_e) => setVegetableDescp(_e.target.value)}
           />
           <FormHelperText className={classes.cautionText}>
             {CONSTANTS.HELPER_TEXT.VISIBLE_ON_APP}
@@ -302,8 +298,8 @@ function AddVegitables({ findAllVegitables }) {
             variant="outlined"
             size="small"
             type="number"
-            value={vegitableQuantity}
-            onChange={(_e) => setVegitableQuantity(_e.target.value)}
+            value={vegetableQuantity}
+            onChange={(_e) => setVegetableQuantity(_e.target.value)}
           />
         </Grid>
         <Grid item>
@@ -371,8 +367,8 @@ function AddVegitables({ findAllVegitables }) {
             variant="outlined"
             size="small"
             type="number"
-            value={vegitableInventoryFixedCost}
-            onChange={(_e) => setVegitableInventoryFixedCost(_e.target.value)}
+            value={vegetableInventoryFixedCost}
+            onChange={(_e) => setVegetableInventoryFixedCost(_e.target.value)}
           />
           <FormHelperText>
             This value is not visible to the user(internal use only)
@@ -584,4 +580,4 @@ function AddVegitables({ findAllVegitables }) {
   );
 }
 
-export default AddVegitables;
+export default AddVegetables;

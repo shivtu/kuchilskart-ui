@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import UnknownError from "../../shared/common/errors/UnknownError";
-import EditVegitable from "./EditVegitable";
+import EditVegetable from "./EditVegetable";
 
 const useStyles = makeStyles((theme) => ({
   searchInput: {
@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ViewAndEditVegitables({ vegitables }) {
+function ViewAndEditVegetables({ vegetables }) {
   const classes = useStyles();
 
   const tableHeader = [
     "#",
-    "Vegitable/Fruit name",
+    "Vegetable/Fruit name",
     "Variant",
     "Quantity",
     "Selling price",
@@ -37,19 +37,19 @@ function ViewAndEditVegitables({ vegitables }) {
     "Edit",
   ];
 
-  const [unknownError, setUnknownError] = useState(false);
+  const [isUnknownError, setIsUnknownError] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [vegitableToEdit, setVegitableToEdit] = useState("");
+  const [vegetableToEdit, setVegetableToEdit] = useState("");
 
   function openEditMenu(subId) {
     try {
-      const rowToEdit = vegitables.find(
-        (vegitable) => vegitable.vegitableSubId === subId
+      const rowToEdit = vegetables.find(
+        (vegetable) => vegetable.vegetableSubId === subId
       );
-      setVegitableToEdit(rowToEdit);
+      setVegetableToEdit(rowToEdit);
       setOpen(true);
     } catch {
-      setUnknownError(!unknownError);
+      setIsUnknownError(!isUnknownError);
     }
   }
 
@@ -68,20 +68,20 @@ function ViewAndEditVegitables({ vegitables }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {vegitables.result.map((v, i) => (
-            <TableRow key={v.vegitableTableId}>
+          {vegetables.result.map((v, i) => (
+            <TableRow key={v.vegetableTableId}>
               <TableCell>{i + 1}</TableCell>
-              <TableCell>{v.vegitable.vegitableName}</TableCell>
-              <TableCell>{v.vegitable.vegitableVariant}</TableCell>
-              <TableCell>{v.vegitable.vegitableQuantity}</TableCell>
-              <TableCell>{v.vegitable.vegitableSellingPrice}</TableCell>
-              <TableCell>{v.vegitable.vegitableOfferedDiscountName}</TableCell>
-              <TableCell>{v.vegitable.vegitableDiscountedPrice}</TableCell>
-              <TableCell>{v.vegitable.vegitableTaxedPrice}</TableCell>
-              <TableCell>{String(v.vegitable.vegitableAvailable)}</TableCell>
+              <TableCell>{v.vegetable.vegetableName}</TableCell>
+              <TableCell>{v.vegetable.vegetableVariant}</TableCell>
+              <TableCell>{v.vegetable.vegetableQuantity}</TableCell>
+              <TableCell>{v.vegetable.vegetableSellingPrice}</TableCell>
+              <TableCell>{v.vegetable.vegetableOfferedDiscountName}</TableCell>
+              <TableCell>{v.vegetable.vegetableDiscountedPrice}</TableCell>
+              <TableCell>{v.vegetable.vegetableTaxedPrice}</TableCell>
+              <TableCell>{String(v.vegetable.vegetableAvailable)}</TableCell>
               <TableCell>
                 {
-                  <Button onClick={() => openEditMenu(v.vegitableSubId)}>
+                  <Button onClick={() => openEditMenu(v.vegetableSubId)}>
                     <EditIcon />
                   </Button>
                 }
@@ -96,7 +96,7 @@ function ViewAndEditVegitables({ vegitables }) {
   return (
     <>
       {open && (
-        <EditVegitable setOpen={setOpen} vegitableToEdit={vegitableToEdit} />
+        <EditVegetable setOpen={setOpen} vegetableToEdit={vegetableToEdit} />
       )}
       {
         <Grid container spacing={1} alignItems="flex-end">
@@ -107,16 +107,16 @@ function ViewAndEditVegitables({ vegitables }) {
             <TextField
               className={classes.searchInput}
               id="input-with-icon-grid"
-              label="Search by vegitable/fruit name"
+              label="Search by vegetable/fruit name"
               onChange={handleTableSearch}
             />
           </Grid>
         </Grid>
       }
       {renderTable()}
-      {unknownError && <UnknownError />}
+      {isUnknownError && <UnknownError />}
     </>
   );
 }
 
-export default ViewAndEditVegitables;
+export default ViewAndEditVegetables;

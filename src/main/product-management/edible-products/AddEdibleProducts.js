@@ -47,7 +47,7 @@ function AddEdibleProducts() {
   const appData = useContext(AppContext);
 
   const itemCategories = [
-    { name: "Vegitables", id: "edible_products_vegitables" },
+    { name: "Vegetables", id: "edible_products_vegetables" },
     { name: "Personal care", id: "edible_products_fruits" },
     { name: "Dairy products", id: "edible_products_spices" },
     { name: "Bakery", id: "edible_products_oil" },
@@ -57,9 +57,8 @@ function AddEdibleProducts() {
   ];
 
   const [itemCategorySelected, setItemCategorySelected] = useState("");
-  const [isExistingDiscountApplied, setIsExistingDiscountApplied] = useState(
-    true
-  );
+  const [isExistingDiscountApplied, setIsExistingDiscountApplied] =
+    useState(true);
   const [measurementUnit, setMeasurementUnit] = useState("");
 
   function handleMeasurementUnitSelect(event) {

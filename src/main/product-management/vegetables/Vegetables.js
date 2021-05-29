@@ -3,17 +3,17 @@ import { Grid, Typography } from "@material-ui/core";
 
 import CONSTANTS from "../../shared/Constants";
 import AddEditRadioOption from "../../shared/common/AddEditRadioOption";
-import AddVegitables from "../vegitables/AddVegitables";
-import ViewAndEditVegitables from "./ViewAndEditVegitables";
+import AddVegetables from "./AddVegetables";
+import ViewAndEditVegetables from "./ViewAndEditVegetables";
 import Spinner from "../../shared/common/Spinner";
 import { AppContext } from "../../Home";
-import { getAllVegitables } from "../../shared/services/RestApiServices";
+import { getAllVegetables } from "../../shared/services/RestApiServices";
 
-function Vegitables({ vegitableTable, updateVegitableTable }) {
+function Vegetables({ vegetableTable, updateVegetableTable }) {
   const appData = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
-  const [vegitables, setVegitables] = useState("");
+  const [vegetables, setVegetables] = useState("");
   const [spinner, setSpinner] = useState(true);
   const [currentRadioOption, setCurrentRadioOption] = useState(
     CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
@@ -25,11 +25,11 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
     },
   };
 
-  async function findAllVegitables() {
+  async function findAllVegetables() {
     setSpinner(true);
-    const res = await getAllVegitables(jwtToken);
+    const res = await getAllVegetables(jwtToken);
     if (res.result) {
-      setVegitables(res);
+      setVegetables(res);
       setSpinner(false);
       setCurrentRadioOption(
         CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
@@ -39,7 +39,7 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   }
 
   useEffect(() => {
-    findAllVegitables();
+    findAllVegetables();
   }, []);
 
   return (
@@ -52,15 +52,15 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
         <Grid container direction="column">
           <Grid container justify="center" alignItems="center">
             <Typography variant="h6" style={styles.pageTitle}>
-              {CONSTANTS.PRODUCT_MANAGEMENT.VEGITABLES.TAB_NAME}
+              {CONSTANTS.PRODUCT_MANAGEMENT.VEGETABLES.TAB_NAME}
             </Typography>
             <AddEditRadioOption setCurrentRadioOption={setCurrentRadioOption} />
           </Grid>
           {currentRadioOption ===
           CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.ADD ? (
-            <AddVegitables findAllVegitables={findAllVegitables} />
+            <AddVegetables findAllVegetables={findAllVegetables} />
           ) : (
-            <ViewAndEditVegitables vegitables={vegitables} />
+            <ViewAndEditVegetables vegetables={vegetables} />
           )}
         </Grid>
       )}
@@ -68,4 +68,4 @@ function Vegitables({ vegitableTable, updateVegitableTable }) {
   );
 }
 
-export default Vegitables;
+export default Vegetables;
