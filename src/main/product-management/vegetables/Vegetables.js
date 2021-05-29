@@ -9,8 +9,8 @@ import Spinner from "../../shared/common/Spinner";
 import { AppContext } from "../../Home";
 import { getAllVegetables } from "../../shared/services/RestApiServices";
 
-function Vegetables({ vegetableTable, updateVegetableTable }) {
-  const appData = useContext(AppContext);
+function Vegetables() {
+  const { appData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
   const [vegetables, setVegetables] = useState("");
@@ -26,16 +26,20 @@ function Vegetables({ vegetableTable, updateVegetableTable }) {
   };
 
   async function findAllVegetables() {
-    setSpinner(true);
-    const res = await getAllVegetables(jwtToken);
-    if (res.result) {
-      setVegetables(res);
+    try {
+      setSpinner(true);
+      const res = await getAllVegetables(jwtToken);
+      if (res.result) {
+        setVegetables(res.result);
+        setCurrentRadioOption(
+          CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
+        );
+      }
       setSpinner(false);
-      setCurrentRadioOption(
-        CONSTANTS.PRODUCT_MANAGEMENT.RADIO_OPTIONS.VIEW_EDIT
-      );
+      return res;
+    } catch (err) {
+      setSpinner(false);
     }
-    return res;
   }
 
   useEffect(() => {

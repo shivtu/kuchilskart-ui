@@ -9,8 +9,10 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import OkButtonDialog from "../shared/common/OkButtonDialog";
+import Spinner from "../shared/common/Spinner";
 import { createNewCategory } from "../shared/services/RestApiServices";
 import { AppContext } from "../Home";
+import { fetchUtilityData } from "../shared/services/RestApiServices";
 
 const useStyles = makeStyles((theme) => ({
   formComponent: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemsCategoryTab() {
   const classes = useStyles();
 
-  const appData = useContext(AppContext);
+  const { appData, setAppData } = useContext(AppContext);
   const jwtToken = appData.jwtToken;
 
   const [itemCategory, setItemCategory] = useState("");
@@ -45,27 +47,69 @@ export default function ItemsCategoryTab() {
   const [okButtonAlert, setOkButtonAlert] = useState(false);
   const [okButtonAlertTitle, setOkButtonAlertTitle] = useState("");
   const [okButtonAlertMessage, setOkButtonAlertMessage] = useState("");
+  const [spinner, setSpinner] = useState(false);
+
+  function resetForm() {
+    setItemCategory("");
+    setItemSubCategory("");
+    setItemCategoryInfo("");
+  }
+
+  function renderAlertDialog(dialogTitle, dialogMsg) {
+    setOkButtonAlertTitle(dialogTitle);
+    setOkButtonAlertMessage(dialogMsg);
+    setOkButtonAlert(true);
+  }
 
   async function handleCreateNewItemCategory() {
-    if (!itemCategory || !itemSubCategory || !itemCategoryInfo) {
-      setOkButtonAlert(true);
-      setOkButtonAlertTitle(CONSTANTS.HELPER_TEXT.INVALID_INPUT);
-      setOkButtonAlertMessage("All fields are mandatory");
-    } else {
-      const data = { itemCategory, itemSubCategory, itemCategoryInfo };
-      const res = await createNewCategory(jwtToken, data);
-      console.log("res>>>>>>>", res.result);
+    setSpinner(true);
+    try {
+      if (!itemCategory || !itemSubCategory || !itemCategoryInfo) {
+        renderAlertDialog(
+          CONSTANTS.HELPER_TEXT.INVALID_INPUT,
+          "All fields are mandatory"
+        );
+      } else {
+        const data = { itemCategory, itemSubCategory, itemCategoryInfo };
+        const res = await createNewCategory(jwtToken, data);
+        if (res.statusCode === 201) {
+          renderAlertDialog(
+            "Category created",
+            `${res.result[0].itemCategory} created with sub category ${res.result[0].itemSubCategory}`
+          );
+          const utilityData = await fetchUtilityData(jwtToken);
+          if (utilityData.result) {
+            setAppData({ jwtToken, utilityData });
+          } else {
+            renderAlertDialog(
+              CONSTANTS.HELPER_TEXT.ERROR,
+              "Unable to update app data, please re-login to fix this"
+            );
+          }
+        }
+      }
+      setSpinner(false);
+      resetForm();
+    } catch (err) {
+      setSpinner(false);
+      renderAlertDialog(CONSTANTS.HELPER_TEXT.ERROR, err);
     }
   }
 
   return (
     <>
-      {okButtonAlert && (
-        <OkButtonDialog
-          setOkButtonAlert={setOkButtonAlert}
-          title={okButtonAlertTitle}
-          message={okButtonAlertMessage}
-        />
+      {spinner ? (
+        <Grid container justify="center" alignItems="center">
+          <Spinner size={CONSTANTS.SPINNER_SIZE.LARGE} />
+        </Grid>
+      ) : (
+        okButtonAlert && (
+          <OkButtonDialog
+            setOkButtonAlert={setOkButtonAlert}
+            title={okButtonAlertTitle}
+            message={okButtonAlertMessage}
+          />
+        )
       )}
       <Grid container direction="column">
         <Typography className={classes.helpText} variant="body1" gutterBottom>

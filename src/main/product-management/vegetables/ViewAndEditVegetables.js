@@ -68,7 +68,7 @@ function ViewAndEditVegetables({ vegetables }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {vegetables.result.map((v, i) => (
+          {vegetables.map((v, i) => (
             <TableRow key={v.vegetableTableId}>
               <TableCell>{i + 1}</TableCell>
               <TableCell>{v.vegetable.vegetableName}</TableCell>

@@ -66,8 +66,6 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
     setIsExistingDiscountApplied(!isExistingDiscountApplied);
   }
 
-  function handleExpiryDate(event) {}
-
   function renderFirstRow() {
     return (
       <Grid
@@ -111,7 +109,7 @@ function EditVegetable({ setOpen, vegetableToEdit }) {
             fullWidth
             variant="outlined"
             size="small"
-            onChange={handleExpiryDate}
+            onChange={() => null}
           />
           <FormHelperText>
             Expiry date must always be a future date

@@ -77,7 +77,7 @@ function Login({ setAppData }) {
     } catch (err) {
       setSpinner(false);
       setOkButtonAlert(true);
-      setOkButtonAlertTitle("Error");
+      setOkButtonAlertTitle(CONSTANTS.HELPER_TEXT.ERROR);
       setOkButtonAlertMessage(err.message || "An unknown error occured!");
     }
   }

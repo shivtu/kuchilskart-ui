@@ -5,6 +5,7 @@ import TaxesTab from "./TaxesTab";
 import DiscountsTab from "./DiscountsTab";
 import ItemsCategoryTab from "./ItemsCategoryTab";
 import DeliveryChargesTab from "./DeliveryChargesTab";
+import DeliveryLocations from "./DeliveryLocations";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,39 +40,10 @@ function a11yProps(index) {
 
 export default function ProductSettingsTabs(props) {
   const [value, setValue] = React.useState(0);
-  const [isDiscountActive, setIsDiscountActive] = useState(false);
-  const [isDiscountActiveLabel, setIsDiscountActiveLabel] = useState(
-    "INACTIVE"
-  );
-  const [overrideDeliveryCharges, setOverrideDeliveryCharges] = useState(false);
-  const [
-    overrideDeliveryChargesLabel,
-    setOverrideDeliveryChargesLabel,
-  ] = useState("APPLIED");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  function handleDiscountState() {
-    setIsDiscountActive(!isDiscountActive);
-  }
-
-  useEffect(() => {
-    isDiscountActive
-      ? setIsDiscountActiveLabel("ACTIVE")
-      : setIsDiscountActiveLabel("INACTIVE");
-  }, [isDiscountActive]);
-
-  function handleDeliveryChargesOverride() {
-    setOverrideDeliveryCharges(!overrideDeliveryCharges);
-  }
-
-  useEffect(() => {
-    overrideDeliveryCharges
-      ? setOverrideDeliveryChargesLabel("OVERRIDEN")
-      : setOverrideDeliveryChargesLabel("APPLIED");
-  }, [overrideDeliveryCharges]);
 
   return (
     <div>
@@ -84,6 +56,7 @@ export default function ProductSettingsTabs(props) {
         <Tab label="Item Categories" {...a11yProps(1)} />
         <Tab label="Discounts" {...a11yProps(2)} />
         <Tab label="Delivery charges" {...a11yProps(3)} />
+        <Tab label="Delivery locations" {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <TaxesTab />
@@ -92,18 +65,13 @@ export default function ProductSettingsTabs(props) {
         <ItemsCategoryTab />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <DiscountsTab
-          isDiscountActiveLabel={isDiscountActiveLabel}
-          isDiscountActive={isDiscountActive}
-          handleDiscountState={handleDiscountState}
-        />
+        <DiscountsTab />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <DeliveryChargesTab
-          overrideDeliveryChargesLabel={overrideDeliveryChargesLabel}
-          overrideDeliveryCharges={overrideDeliveryCharges}
-          handleDeliveryChargesOverride={handleDeliveryChargesOverride}
-        />
+        <DeliveryChargesTab />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <DeliveryLocations />
       </TabPanel>
     </div>
   );

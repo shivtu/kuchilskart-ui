@@ -14,6 +14,9 @@ const httpOptions = {
     findAllVegetables: "/vegetables/findAll",
     createNewTax: "/taxes/add",
     createNewItemCategory: "/itemCategory/create",
+    createNewDiscount: "/discount/create",
+    createNewDeliveryCharge: "/deliveryUtility/createConstraint",
+    addNewDeliveryLocation: "/deliveryUtility/addNewDeliveryLocation",
   },
 };
 
@@ -114,6 +117,45 @@ async function createNewCategory(authToken, data) {
   return newCategory.data;
 }
 
+async function createNewDiscount(authToken, data) {
+  const newDiscount = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewDiscount}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newDiscount.data;
+}
+
+async function createNewDeliveryCharge(authToken, data) {
+  const newDeliveryCharge = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.createNewDeliveryCharge}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newDeliveryCharge.data;
+}
+
+async function createNewDeliveryLocation(authToken, data) {
+  const newDeliveryLocation = await axios({
+    method: "POST",
+    url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.addNewDeliveryLocation}`,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return newDeliveryLocation.data;
+}
+
 export {
   signUp,
   authenticateUser,
@@ -123,4 +165,7 @@ export {
   getAllVegetables,
   createNewTax,
   createNewCategory,
+  createNewDiscount,
+  createNewDeliveryCharge,
+  createNewDeliveryLocation,
 };

@@ -31,7 +31,7 @@ const CONSTANTS = {
   },
   PRODUCT_MANAGEMENT: {
     VEGETABLES: {
-      TAB_NAME: "Fruits & Vagitables",
+      TAB_NAME: "Fruits & Vagetables",
     },
     EDIBLE_PRODUCTS: {
       TAB_NAME: "Edible products",
@@ -50,6 +50,7 @@ const CONSTANTS = {
   HELPER_TEXT: {
     VISIBLE_ON_APP: "This is visible to customer on mobile app!",
     INVALID_INPUT: "Invalid input",
+    ERROR: "Error",
   },
   BUTTONS: {
     OK: "Ok",
