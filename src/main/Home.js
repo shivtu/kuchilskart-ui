@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import NavigationMenu from "./navigation-menu/NavigationMenu";
 import Login from "./Login";
-import { utilityData } from "./shared/MockData";
+// import { utilityData } from "./shared/MockData";
 
 export const AppContext = createContext(null);
 

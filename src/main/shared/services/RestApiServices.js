@@ -63,7 +63,6 @@ async function fetchUtilityData(authToken) {
       "Access-Control-Allow-Origin": "*",
     },
   });
-  console.log(`utilityData`, utilityData);
   return utilityData.data;
 }
 
@@ -86,6 +85,7 @@ async function getAllVegetables(authToken) {
     url: `${httpOptions.host}${httpOptions.uri}${httpOptions.role.retailer}${httpOptions.route.findAllVegetables}`,
     headers: {
       Authorization: `Bearer ${authToken}`,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   return allVegetables.data;
